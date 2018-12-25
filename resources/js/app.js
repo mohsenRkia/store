@@ -29,5 +29,33 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    
+    data:{
+        
+    },
+    methods:{
+        deleteRow:function ($id) {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this menu!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        axios.post('/admin/menu/delete/'+$id).then(response=>{
+                            swal("Your menu has deleted successfully!", {
+                                icon: "success",
+                            }).then(response=>{
+                                location.reload();
+                            });
+                        });
+                    } else {
+                        swal("Your menu hasn't deleted!!");
+                    }
+                });
+        }
+    }
 });

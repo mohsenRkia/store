@@ -18,9 +18,12 @@
                                 <li><a href="add-to-wishlist.html">Wishlist</a></li>
                             </ul>
                         </li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        @foreach($menus as $menu)
+                            <li><a href="{{$menu->link}}">{{$menu->name}}</a></li>
+                        @endforeach
+
+
+
                         <li><a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
                     </ul>
                 </div>

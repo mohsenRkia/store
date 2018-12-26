@@ -98,4 +98,36 @@ Route::group(['prefix' => 'admin'],function (){
 
     });
 
+    Route::group(['prefix' => 'slider'],function (){
+       Route::get('/',[
+           'uses' => 'SliderController@index',
+           'as' => 'slider.index'
+       ]);
+
+        Route::get('/add',[
+            'uses' => 'SliderController@create',
+            'as' => 'slider.add'
+        ]);
+
+        Route::post('/add',[
+            'uses' => 'SliderController@store',
+            'as' => 'slider.store'
+        ]);
+
+        Route::get('/edit/{id}',[
+            'uses' => 'SliderController@edit',
+            'as' => 'slider.edit'
+        ]);
+
+        Route::post('/edit/{id}',[
+            'uses' => 'SliderController@update',
+            'as' => 'slider.update'
+        ]);
+
+        Route::post('/delete/{id}',[
+            'uses' => 'SliderController@destroy',
+            'as' => 'slider.delete'
+        ]);
+    });
+
 });

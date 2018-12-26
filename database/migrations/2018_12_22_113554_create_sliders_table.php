@@ -20,6 +20,8 @@ class CreateSlidersTable extends Migration
             $table->string('reason',256);
             $table->text('description');
             $table->string('urlimage');
+            $table->string('location',1);
+            $table->string('link');
             $table->timestamps();
         });
     }

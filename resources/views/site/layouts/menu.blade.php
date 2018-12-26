@@ -18,6 +18,9 @@
                                 <li><a href="add-to-wishlist.html">Wishlist</a></li>
                             </ul>
                         </li>
+                        @foreach($caregorys as $caregory)
+                            <li><a href="">{{$caregory->name}}</a></li>
+                        @endforeach
                         @foreach($menus as $menu)
                             <li><a href="{{$menu->link}}">{{$menu->name}}</a></li>
                         @endforeach

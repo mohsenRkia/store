@@ -35,20 +35,25 @@
                             <div class="row">
 
                                 <div class="col-sm-12">
-                                    <form action="{{route('menu.add')}}" method="post">
+                                    <form action="{{route('category.store')}}" method="post">
                                         @csrf
-                                    <div class="form-group">
-                                        <input name="name" type="text" class="form-control" id="inputAddress" placeholder="Name" value="{{old('name')}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="link" type="text" class="form-control" id="inputAddress" placeholder="Link" value="{{old('link')}}">
-                                    </div>
+                                        <div class="form-group">
+                                            <input name="name" type="text" class="form-control" id="inputAddress" placeholder="Name" value="{{old('name')}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control" name="isparent">
+                                                <option value="0">Parent</option>
+                                                @foreach($categorys as $category)
+                                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
                                         <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
-                                    <button type="reset" class="btn btn-secondary">Reset</button>
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                        <button type="reset" class="btn btn-secondary">Reset</button>
+                                        <button type="submit" class="btn btn-success">Submit</button>
                                     </form>
-                            </div>
+                                </div>
                             </div>
                         </li>
                     </ul>

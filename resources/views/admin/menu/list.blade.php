@@ -12,7 +12,7 @@
             </div>
         </div>
         <!-- End Page Header -->
-
+        <a href="{{route('menu.add')}}" class="mb-2 btn btn-info mr-2">Add new Menu</a>
 
         <div class="row">
             <div class="col">
@@ -37,7 +37,7 @@
                                     <td>
                                         <div class="blog-comments__actions">
                                             <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-white" @click="deleteRow({{$menu->id}})">
+                                                <button type="button" class="btn btn-white" @click="deleteRow({{$menu->id}},'menu')">
                               <span class="text-danger">
                                 <i class="material-icons">clear</i>
                               </span> Delete
@@ -56,6 +56,9 @@
 
                             </tbody>
                         </table>
+                    </div>
+                    <div class="card card-footer">
+                        {{$menus->links()}}
                     </div>
                 </div>
             </div>

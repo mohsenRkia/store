@@ -58,7 +58,7 @@ class MenuController extends Controller
 
     public function list()
     {
-        $menus = Menu::all();
+        $menus = Menu::paginate(10);
         return view('admin.menu.list',compact(['menus']));
     }
 
@@ -127,7 +127,7 @@ class MenuController extends Controller
         if ($menu->delete()){
             return $menu;
         }else{
-            dd('false');
+            return redirect()->back();
         }
     }
 }

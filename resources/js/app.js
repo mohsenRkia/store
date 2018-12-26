@@ -35,25 +35,25 @@ const app = new Vue({
         
     },
     methods:{
-        deleteRow:function ($id) {
+        deleteRow:function ($id,$name) {
             swal({
                 title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this menu!",
+                text: "Once deleted, you will not be able to recover this " + $name +"!",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
             })
                 .then((willDelete) => {
                     if (willDelete) {
-                        axios.post('/admin/menu/delete/'+$id).then(response=>{
-                            swal("Your menu has deleted successfully!", {
+                        axios.post('/admin/' + $name + '/delete/'+$id).then(response=>{
+                            swal("Your " + $name + " has deleted successfully!", {
                                 icon: "success",
                             }).then(response=>{
                                 location.reload();
                             });
                         });
                     } else {
-                        swal("Your menu hasn't deleted!!");
+                        swal("Your " + $name + " hasn't deleted!!");
                     }
                 });
         }

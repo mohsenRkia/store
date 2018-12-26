@@ -23,9 +23,12 @@ class MenuComposer
 
     public function compose(View $view)
     {
-        $menus =  (object)$this->menu->menuList();
+        $all =  (object)$this->menu->menuList();
 
-        $view->with(compact(['menus']));
+        $menus = $all->lists;
+        $caregorys = $all->categories;
+
+        $view->with(compact(['menus','caregorys']));
     }
 
 }

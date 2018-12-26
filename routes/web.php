@@ -60,4 +60,42 @@ Route::group(['prefix' => 'admin'],function (){
         ]);
     });
 
+    Route::group(['prefix' => 'category'],function (){
+       Route::get('/',[
+           'uses' => 'CategoryController@index',
+           'as' => 'category.index'
+       ]);
+
+        Route::get('/add',[
+            'uses' => 'CategoryController@create',
+            'as' => 'category.add'
+        ]);
+
+        Route::post('/add',[
+            'uses' => 'CategoryController@store',
+            'as' => 'category.store'
+        ]);
+
+        Route::get('/list',[
+            'uses' => 'CategoryController@list',
+            'as' => 'category.list'
+        ]);
+
+        Route::get('/edit/{id}',[
+            'uses' => 'CategoryController@edit',
+            'as' => 'category.edit'
+        ]);
+
+        Route::post('/edit/{id}',[
+            'uses' => 'CategoryController@update',
+            'as' => 'category.update'
+        ]);
+
+        Route::post('/delete/{id}',[
+            'uses' => 'CategoryController@destroy',
+            'as' => 'category.delete'
+        ]);
+
+    });
+
 });

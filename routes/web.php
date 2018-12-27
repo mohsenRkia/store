@@ -130,4 +130,35 @@ Route::group(['prefix' => 'admin'],function (){
         ]);
     });
 
+    Route::group(['prefix' => 'offeritem'],function (){
+        Route::get('/',[
+            'uses' => 'OfferitemController@index',
+            'as' => 'offeritem.index'
+        ]);
+        Route::get('/add',[
+            'uses' => 'OfferitemController@create',
+            'as' => 'offeritem.add'
+        ]);
+        Route::post('/add',[
+            'uses' => 'OfferitemController@store',
+            'as' => 'offeritem.store'
+        ]);
+
+        Route::get('/edit/{id}',[
+            'uses' => 'OfferitemController@edit',
+            'as' => 'offeritem.edit'
+        ]);
+
+        Route::post('/edit/{id}',[
+            'uses' => 'OfferitemController@update',
+            'as' => 'offeritem.update'
+        ]);
+
+        Route::post('/delete/{id}',[
+            'uses' => 'OfferitemController@destroy',
+            'as' => 'offeritem.delete'
+        ]);
+
+    });
+
 });

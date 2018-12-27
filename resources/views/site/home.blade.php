@@ -58,34 +58,47 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <a href="shop.html" class="f-product-1" style="background-image: url(/site/images/item-1.jpg);">
+                    @foreach($offers as $offer)
+                        @if($offer->location == "L")
+                    <a href="{{$offer->link}}" class="f-product-1" style="background-image: url('/uploads/images/offers/{{$offer->imageurl}}');">
                         <div class="desc">
-                            <h2>Fahion <br>for <br>men</h2>
+                            <h2><br>{{$offer->title}}<br></h2>
                         </div>
                     </a>
+                        @endif
+                    @endforeach
                 </div>
                 <div class="col-md-6">
                     <div class="row">
+                        @foreach($offers as $offer)
+                        @if($offer->location == "SL")
                         <div class="col-md-6">
-                            <a href="" class="f-product-2" style="background-image: url(/site/images/item-2.jpg);">
+                            <a href="{{$offer->link}}" class="f-product-2" style="background-image: url('/uploads/images/offers/{{$offer->imageurl}}');">
                                 <div class="desc">
-                                    <h2>New <br>Arrival <br>Dress</h2>
+                                    <h2><br>{{$offer->title}}<br></h2>
                                 </div>
                             </a>
                         </div>
+                        @elseif($offer->location == "SR")
                         <div class="col-md-6">
-                            <a href="" class="f-product-2" style="background-image: url(/site/images/item-4.jpg);">
+                            <a href="{{$offer->link}}" class="f-product-2" style="background-image: url('/uploads/images/offers/{{$offer->imageurl}}');">
                                 <div class="desc">
-                                    <h2>Sale <br>20% <br>off</h2>
+                                    <h2><br>{{$offer->title}}<br></h2>
                                 </div>
                             </a>
                         </div>
+                            @endif
+                        @endforeach
                         <div class="col-md-12">
-                            <a href="" class="f-product-2" style="background-image: url(/site/images/item-3.jpg);">
+                            @foreach($offers as $offer)
+                                @if($offer->location == "M")
+                            <a href="{{$offer->link}}" class="f-product-2" style="background-image: url('/uploads/images/offers/{{$offer->imageurl}}');">
                                 <div class="desc">
-                                    <h2>Shoes <br>for <br>men</h2>
+                                    <h2><br>{{$offer->title}}<br></h2>
                                 </div>
                             </a>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>

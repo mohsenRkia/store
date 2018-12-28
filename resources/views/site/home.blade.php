@@ -203,7 +203,7 @@
                             <div class="text-lefts">
                                 <div class="sale-box">
                                     <div class="sale-box-top">
-                                        <h2 class="number">45</h2>
+                                        <h2 class="number">{{$special->discountvalue}}</h2>
                                         <span class="sup-1">%</span>
                                         <span class="sup-2">Off</span>
                                     </div>
@@ -211,9 +211,10 @@
                                 </div>
                             </div>
                             <div class="text-rights">
-                                <h3 class="title">Just hurry up limited offer!</h3>
-                                <p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-                                <p><a href="shop.html" class="btn btn-primary">Shop Now</a> <a href="#" class="btn btn-primary btn-outline">Read more</a></p>
+                                <h3 class="title">{{$special->title}}</h3>
+                                <p>{{$special->description}}</p>
+                                <p><a href="{{$special->link}}" class="btn btn-primary">Shop Now</a>
+                                    <a href="{{$special->link}}" class="btn btn-primary btn-outline">Read more</a></p>
                             </div>
                         </div>
                     </div>

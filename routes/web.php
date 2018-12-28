@@ -160,5 +160,19 @@ Route::group(['prefix' => 'admin'],function (){
         ]);
 
     });
+    Route::group(['prefix' => 'specialoffer'],function(){
+        Route::get('/',[
+            'uses' => 'SpecialofferController@create',
+            'as' => 'special.create'
+        ]);
+        Route::post('/',[
+            'uses' => 'SpecialofferController@store',
+            'as' => 'special.store'
+        ]);
+        Route::post('/{id}',[
+            'uses' => 'SpecialofferController@update',
+            'as' => 'special.update'
+        ]);
+    });
 
 });

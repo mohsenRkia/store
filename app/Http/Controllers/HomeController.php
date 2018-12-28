@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Offeritem;
 use App\Models\Slider;
+use App\Models\Specialoffer;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -12,6 +13,7 @@ class HomeController extends Controller
     {
         $sliders = Slider::all();
         $offers = Offeritem::all();
-        return view('site.home',compact(['sliders','offers']));
+        $special = Specialoffer::orderBy('id','DESC')->first();
+        return view('site.home',compact(['sliders','offers','special']));
     }
 }

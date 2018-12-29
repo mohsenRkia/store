@@ -175,4 +175,59 @@ Route::group(['prefix' => 'admin'],function (){
         ]);
     });
 
+    Route::group(['prefix' => 'location'],function (){
+
+           Route::get('country/list',[
+               'uses' => 'CountryController@index',
+               'as' => 'country.list'
+           ]);
+           Route::get('country/add',[
+               'uses' => 'CountryController@create',
+               'as' => 'country.create'
+           ]);
+           Route::post('country/add',[
+               'uses' => 'CountryController@store',
+               'as' => 'country.store'
+           ]);
+           Route::get('country/edit/{id}',[
+               'uses' => 'CountryController@edit',
+               'as' => 'country.edit'
+           ]);
+        Route::post('country/edit/{id}',[
+            'uses' => 'CountryController@update',
+            'as' => 'country.update'
+        ]);
+           Route::post('country/delete/{id}',[
+               'uses' => 'CountryController@destroy',
+               'as' => 'country.delete'
+           ]);
+
+
+        Route::get('state/list',[
+            'uses' => 'StateController@index',
+            'as' => 'state.list'
+        ]);
+        Route::get('state/add',[
+            'uses' => 'StateController@create',
+            'as' => 'state.create'
+        ]);
+        Route::post('state/add',[
+            'uses' => 'StateController@store',
+            'as' => 'state.store'
+        ]);
+        Route::get('state/edit/{id}',[
+            'uses' => 'StateController@edit',
+            'as' => 'state.edit'
+        ]);
+        Route::post('state/edit/{id}',[
+            'uses' => 'StateController@update',
+            'as' => 'state.update'
+        ]);
+        Route::post('state/delete/{id}',[
+            'uses' => 'StateController@destroy',
+            'as' => 'state.delete'
+        ]);
+
+    });
+
 });

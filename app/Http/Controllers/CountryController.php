@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Country;
+use App\Models\Country;
 use Illuminate\Http\Request;
 
 class CountryController extends Controller
@@ -14,7 +14,8 @@ class CountryController extends Controller
      */
     public function index()
     {
-        //
+        $countrys = Country::all();
+        return view('admin.location.country.list',compact(['countrys']));
     }
 
     /**
@@ -24,7 +25,7 @@ class CountryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.location.country.create');
     }
 
     /**
@@ -33,9 +34,21 @@ class CountryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $r)
     {
-        //
+        $r->validate([
+            'name' => 'required|max:60'
+        ]);
+
+        $create = Country::create([
+            'name' => $r->name
+        ]);
+        if ($create){
+            createAlert("Your Country has added successfully!");
+            return redirect()->route("state.list");
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -55,9 +68,10 @@ class CountryController extends Controller
      * @param  \App\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function edit(Country $country)
+    public function edit($id)
     {
-        //
+        $country = Country::find($id);
+        return view('admin.location.country.edit',compact(['country']));
     }
 
     /**
@@ -67,9 +81,22 @@ class CountryController extends Controller
      * @param  \App\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Country $country)
+    public function update(Request $r,$id)
     {
-        //
+        $r->validate([
+            'name' => 'required|max:60'
+        ]);
+
+        $country = Country::find($id);
+        $country->name = $r->name;
+
+        if ($country->save()){
+            createAlert("Your Country has edited successfully!");
+            return redirect()->route("state.list");
+        }else{
+            return redirect()->back();
+        }
+
     }
 
     /**
@@ -78,8 +105,9 @@ class CountryController extends Controller
      * @param  \App\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Country $country)
+    public function destroy($id)
     {
-        //
+        $country = Country::find($id);
+        $country->delete();
     }
 }

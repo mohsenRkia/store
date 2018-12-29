@@ -56,6 +56,30 @@ const app = new Vue({
                         swal("Your " + $name + " hasn't deleted!!");
                     }
                 });
+        },
+
+        deleteRowDouble:function ($id,$name,$route) {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this " + $name +"!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        axios.post('/admin/' + $route + '/delete/'+$id).then(response=>{
+                            swal("Your " + $name + " has deleted successfully!", {
+                                icon: "success",
+                            }).then(response=>{
+                                location.reload();
+                            });
+                        });
+                    } else {
+                        swal("Your " + $name + " hasn't deleted!!");
+                    }
+                });
         }
+
     }
 });

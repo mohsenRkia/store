@@ -19,7 +19,7 @@
             <div class="col-lg-8 mb-4">
                 <div class="card card-small mb-4">
                     <div class="card-header border-bottom">
-                        <h6 class="m-0">Add New Category</h6>
+                        <h6 class="m-0">Add New State</h6>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item p-3">
@@ -35,20 +35,19 @@
                             <div class="row">
 
                                 <div class="col-sm-12">
-                                    <form action="{{route('category.store')}}" method="post">
+                                    <form action="{{route('state.store')}}" method="post">
                                         @csrf
                                         <div class="form-group">
                                             <input name="name" type="text" class="form-control" id="inputAddress" placeholder="Name" value="{{old('name')}}">
                                         </div>
                                         <div class="form-group">
-                                            <select class="form-control" name="isparent">
-                                                <option value="0">Parent</option>
-                                                @foreach($categorys as $category)
-                                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                                @endforeach
-                                            </select>
+                                        <select class="form-control" name="country_id">
+                                            <option value="0">Select Country</option>
+                                            @foreach($countries as $country)
+                                                <option value="{{$country->id}}">{{$country->name}}</option>
+                                            @endforeach
+                                        </select>
                                         </div>
-
                                         <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
                                         <button type="reset" class="btn btn-secondary">Reset</button>
                                         <button type="submit" class="btn btn-success">Submit</button>

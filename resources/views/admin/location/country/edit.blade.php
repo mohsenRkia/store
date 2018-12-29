@@ -19,7 +19,7 @@
             <div class="col-lg-8 mb-4">
                 <div class="card card-small mb-4">
                     <div class="card-header border-bottom">
-                        <h6 class="m-0">Add New Category</h6>
+                        <h6 class="m-0">Add New Country</h6>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item p-3">
@@ -35,18 +35,10 @@
                             <div class="row">
 
                                 <div class="col-sm-12">
-                                    <form action="{{route('category.store')}}" method="post">
+                                    <form action="{{route('country.update',['id' => $country->id])}}" method="post">
                                         @csrf
                                         <div class="form-group">
-                                            <input name="name" type="text" class="form-control" id="inputAddress" placeholder="Name" value="{{old('name')}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <select class="form-control" name="isparent">
-                                                <option value="0">Parent</option>
-                                                @foreach($categorys as $category)
-                                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                                @endforeach
-                                            </select>
+                                            <input name="name" type="text" class="form-control" id="inputAddress" placeholder="Name" value="{{$country->name}}">
                                         </div>
 
                                         <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>

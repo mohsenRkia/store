@@ -230,4 +230,32 @@ Route::group(['prefix' => 'admin'],function (){
 
     });
 
+    Route::group(['prefix' => 'level'],function (){
+        Route::get('/',[
+            'uses' => 'LevelController@index',
+            'as' => 'level.index'
+        ]);
+        Route::get('/add',[
+            'uses' => 'LevelController@create',
+            'as' => 'level.create'
+        ]);
+        Route::post('/add',[
+            'uses' => 'LevelController@store',
+            'as' => 'level.store'
+        ]);
+        Route::get('/edit/{id}',[
+            'uses' => 'LevelController@edit',
+            'as' => 'level.edit'
+        ]);
+        Route::post('/edit/{id}',[
+            'uses' => 'LevelController@update',
+            'as' => 'level.update'
+        ]);
+        Route::post('/delete/{id}',[
+            'uses' => 'LevelController@destroy',
+            'as' => 'level.delete'
+        ]);
+
+    });
+
 });

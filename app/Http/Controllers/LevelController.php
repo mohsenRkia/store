@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Level;
+use App\Models\Level;
 use Illuminate\Http\Request;
 
 class LevelController extends Controller
@@ -14,7 +14,8 @@ class LevelController extends Controller
      */
     public function index()
     {
-        //
+        $levels = Level::all();
+        return view('admin.level.index',compact(['levels']));
     }
 
     /**
@@ -24,7 +25,7 @@ class LevelController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.level.create');
     }
 
     /**
@@ -33,9 +34,22 @@ class LevelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $r)
     {
-        //
+        $r->validate([
+            'name' => 'required|max:50'
+        ]);
+
+        $create = Level::create([
+            'title' => $r->name
+        ]);
+
+        if ($create){
+            createAlert("Your Level has added successfully!!");
+            return redirect()->route('level.index');
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -55,9 +69,10 @@ class LevelController extends Controller
      * @param  \App\Level  $level
      * @return \Illuminate\Http\Response
      */
-    public function edit(Level $level)
+    public function edit($id)
     {
-        //
+        $level = Level::find($id);
+        return view('admin.level.edit',compact(['level']));
     }
 
     /**
@@ -67,9 +82,21 @@ class LevelController extends Controller
      * @param  \App\Level  $level
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Level $level)
+    public function update(Request $r,$id)
     {
-        //
+        $r->validate([
+            'name' => 'required|max:50'
+        ]);
+
+        $level = Level::find($id);
+        $level->title = $r->name;
+        $save = $level->save();
+        if ($save){
+            createAlert("Your Level has edited successfully!!");
+            return redirect()->route('level.index');
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -78,8 +105,9 @@ class LevelController extends Controller
      * @param  \App\Level  $level
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Level $level)
+    public function destroy($id)
     {
-        //
+        $level = Level::find($id);
+        $level->delete();
     }
 }

@@ -20,8 +20,14 @@ Route::get('/',[
     'as' => 'home.index'
 ]);
 
+Route::post('/register/create',[
+    'uses' => 'RegisterController@store',
+    'as' => 'register.store'
+]);
 
-Route::group(['prefix' => 'admin'],function (){
+
+
+Route::group(['prefix' => 'admin','middleware' => 'verified'],function (){
 
     Route::get('/dashboard',[
         'uses' => 'AdminController@index',
@@ -259,3 +265,7 @@ Route::group(['prefix' => 'admin'],function (){
     });
 
 });
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', 'HomeController@index')->name('home');

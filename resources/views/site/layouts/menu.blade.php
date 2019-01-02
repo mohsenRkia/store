@@ -24,7 +24,29 @@
                         @foreach($menus as $menu)
                             <li><a href="{{$menu->link}}">{{$menu->name}}</a></li>
                         @endforeach
-
+                        @if(Auth::user())
+                        <li>
+                            <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                       document.getElementById('logout-form').submit();">
+                                 Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                        @else
+                        <li>
+                            <a href="{{route('register')}}">
+                                Register
+                            </a>
+                        </li>
+                            <li>
+                                <a href="{{route('login')}}">
+                                    Login
+                                </a>
+                            </li>
+                        @endif
 
 
                         <li><a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a></li>

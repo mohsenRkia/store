@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Models\Image;
+use App\Models\Profile;
+use App\Models\State;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -27,4 +30,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class,'imageable');
+    }
 }

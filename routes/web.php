@@ -264,6 +264,25 @@ Route::group(['prefix' => 'admin','middleware' => 'verified'],function (){
 
     });
 
+    Route::group(['prefix' => 'profile'],function (){
+       Route::get('/edit/{id}',[
+           'uses' => 'ProfileController@edit',
+           'as' => 'profile.index'
+       ]);
+        Route::post('/edit/{id}',[
+            'uses' => 'ProfileController@update',
+            'as' => 'profile.update'
+        ]);
+        Route::post('/getstate',[
+            'uses' => 'ProfileController@getstate',
+            'as' => 'profile.getstate'
+        ]);
+        Route::post('/changepassword/{id}',[
+            'uses' => 'ProfileController@changepassword',
+            'as' => 'profile.changepassword'
+        ]);
+    });
+
 });
 
 Auth::routes(['verify' => true]);

@@ -73,6 +73,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link active" href="{{route('profile.index',['id' => Auth::user()->id])}}">
+                    <i class="material-icons">edit</i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link " href="components-blog-posts.html">
                     <i class="material-icons">vertical_split</i>
                     <span>Blog Posts</span>

@@ -32,9 +32,21 @@ const app = new Vue({
     el: '#app',
     
     data:{
+        countryId:"",
+        states:[],
         
     },
     methods:{
+        selectState:function(){
+            this.states = [];
+            axios.post('/admin/profile/getstate',{
+                id: this.countryId
+            }).then(response=>{
+                this.states.push(response.data);
+                this.$forceUpdate();
+            });
+
+        },
         deleteRow:function ($id,$name) {
             swal({
                 title: "Are you sure?",

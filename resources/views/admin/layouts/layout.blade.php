@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/admin/files/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="/admin/styles/shards-dashboards.1.1.0.min.css">
     <link rel="stylesheet" href="/admin/styles/extras.1.1.0.min.css">
-
+    @yield('css')
 </head>
 <body class="h-100">
 
@@ -74,7 +74,16 @@
             button: "Ok!",
         });
     </script>
+@elseif(session()->has('warningAlert'))
+    <script>
+        swal({
+            title: "{{session('warningAlert.title')}}",
+            icon: "warning",
+            button: "Cancel!",
+        });
+    </script>
 @endif
 
+@yield('js')
 </body>
 </html>

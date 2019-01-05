@@ -12,4 +12,10 @@ class State extends Model
     {
         return $this->belongsTo(Country::class);
     }
+
+    public function profiles()
+    {
+        return $this->hasMany(Profile::class);
+    }
+
 }

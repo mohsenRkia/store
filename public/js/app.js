@@ -47962,8 +47962,23 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 
 var app = new Vue({
   el: '#app',
-  data: {},
+  data: {
+    countryId: "",
+    states: []
+  },
   methods: {
+    selectState: function selectState() {
+      var _this = this;
+
+      this.states = [];
+      axios.post('/admin/profile/getstate', {
+        id: this.countryId
+      }).then(function (response) {
+        _this.states.push(response.data);
+
+        _this.$forceUpdate();
+      });
+    },
     deleteRow: function deleteRow($id, $name) {
       swal({
         title: "Are you sure?",

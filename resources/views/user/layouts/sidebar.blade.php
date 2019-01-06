@@ -31,57 +31,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('menu.index')}}">
-                    <i class="material-icons">edit</i>
-                    <span>Menu</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('category.index')}}">
-                    <i class="material-icons">edit</i>
-                    <span>Categories</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('slider.index')}}">
-                    <i class="material-icons">edit</i>
-                    <span>Sliders</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('offeritem.index')}}">
-                    <i class="material-icons">edit</i>
-                    <span>Offer Items</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('special.create')}}">
-                    <i class="material-icons">edit</i>
-                    <span>Special Offer</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('state.list')}}">
-                    <i class="material-icons">edit</i>
-                    <span>Location</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('level.index')}}">
-                    <i class="material-icons">edit</i>
-                    <span>Levels</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('profile.index',['id' => Auth::user()->id])}}">
+                <a class="nav-link active" href="{{route('user.edit',['id' => Auth::user()->id])}}">
                     <i class="material-icons">person</i>
                     <span>Profile</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="material-icons">edit</i>
-                    <span>Users</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -91,15 +43,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{route('product.index')}}">
+                <a class="nav-link " href="components-blog-posts.html">
                     <i class="material-icons">vertical_split</i>
                     <span>Blog Posts</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{route('product.create')}}">
+                <a class="nav-link " href="add-new-post.html">
                     <i class="material-icons">note_add</i>
-                    <span>Add New Product</span>
+                    <span>Add New Post</span>
                 </a>
             </li>
             <li class="nav-item">

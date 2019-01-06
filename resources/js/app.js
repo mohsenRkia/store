@@ -37,6 +37,16 @@ const app = new Vue({
         
     },
     methods:{
+        selectUserState:function(){
+            this.states = [];
+            axios.post('/user/profile/getstate',{
+                id: this.countryId
+            }).then(response=>{
+                this.states.push(response.data);
+                this.$forceUpdate();
+            });
+
+        },
         selectState:function(){
             this.states = [];
             axios.post('/admin/profile/getstate',{

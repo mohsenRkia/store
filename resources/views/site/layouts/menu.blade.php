@@ -25,6 +25,11 @@
                             <li><a href="{{$menu->link}}">{{$menu->name}}</a></li>
                         @endforeach
                         @if(Auth::user())
+                            <li>
+                                <a href="{{route('user.index')}}">
+                                    Panel
+                                </a>
+                            </li>
                         <li>
                             <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                                onclick="event.preventDefault();

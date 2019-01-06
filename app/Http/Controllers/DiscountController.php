@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Discount;
+use App\Models\Discount;
 use Illuminate\Http\Request;
 
 class DiscountController extends Controller
@@ -14,7 +14,8 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        //
+        $discounts = Discount::all();
+        return view('admin.discount.index',compact(['discounts']));
     }
 
     /**
@@ -24,7 +25,7 @@ class DiscountController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.discount.create');
     }
 
     /**
@@ -33,9 +34,23 @@ class DiscountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $r)
     {
-        //
+        $r->validate([
+            'code' => 'required|string|max:30',
+            'value' => 'required|numeric|max:100|min:1'
+        ]);
+
+        $create = Discount::create([
+            'discountcode' => $r->code,
+            'value' => $r->value
+        ]);
+        if ($create){
+            createAlert("New discount has added successfully!!");
+            return redirect()->route('discount.index');
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -55,9 +70,10 @@ class DiscountController extends Controller
      * @param  \App\Discount  $discount
      * @return \Illuminate\Http\Response
      */
-    public function edit(Discount $discount)
+    public function edit($id)
     {
-        //
+        $discount = Discount::find($id);
+        return view('admin.discount.edit',compact(['discount']));
     }
 
     /**
@@ -67,9 +83,26 @@ class DiscountController extends Controller
      * @param  \App\Discount  $discount
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Discount $discount)
+    public function update(Request $r,$id)
     {
-        //
+        $r->validate([
+            'code' => 'required|string|max:30',
+            'value' => 'required|numeric|max:100|min:1'
+        ]);
+
+        $update = Discount::find($id)->update([
+            'discountcode' => $r->code,
+            'value' => $r->value
+        ]);
+
+        if ($update){
+            createAlert("The discount has edited successfully!!");
+            return redirect()->route('discount.index');
+        }else{
+        return redirect()->back();
+
+        }
+
     }
 
     /**
@@ -78,8 +111,9 @@ class DiscountController extends Controller
      * @param  \App\Discount  $discount
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Discount $discount)
+    public function destroy($id)
     {
-        //
+        $discount = Discount::find($id);
+        $discount->delete();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Color;
+use App\Models\Color;
 use Illuminate\Http\Request;
 
 class ColorController extends Controller
@@ -14,7 +14,8 @@ class ColorController extends Controller
      */
     public function index()
     {
-        //
+        $colors = Color::all();
+        return view('admin.color.index',compact(['colors']));
     }
 
     /**
@@ -24,7 +25,7 @@ class ColorController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.color.create');
     }
 
     /**
@@ -33,9 +34,22 @@ class ColorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $r)
     {
-        //
+        $r->validate([
+            'name' => 'required|max:20|string|alpha'
+        ]);
+
+        $create = Color::create([
+            'name' => $r->name
+        ]);
+
+        if ($create){
+            createAlert("New Color has added successfully!!");
+            return redirect()->route('color.index');
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -55,9 +69,10 @@ class ColorController extends Controller
      * @param  \App\Color  $color
      * @return \Illuminate\Http\Response
      */
-    public function edit(Color $color)
+    public function edit($id)
     {
-        //
+        $color = Color::find($id);
+        return view('admin.color.edit',compact(['color']));
     }
 
     /**
@@ -67,9 +82,22 @@ class ColorController extends Controller
      * @param  \App\Color  $color
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Color $color)
+    public function update(Request $r,$id)
     {
-        //
+        $r->validate([
+            'name' => 'required|max:20|string|alpha'
+        ]);
+
+        $update = Color::find($id)->update([
+            'name' => $r->name
+        ]);
+
+        if ($update){
+            createAlert("The Color has edited successfully!!");
+            return redirect()->route('color.index');
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -78,8 +106,9 @@ class ColorController extends Controller
      * @param  \App\Color  $color
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Color $color)
+    public function destroy($id)
     {
-        //
+        $color = Color::find($id);
+        $color->delete();
     }
 }

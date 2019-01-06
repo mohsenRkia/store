@@ -47967,16 +47967,28 @@ var app = new Vue({
     states: []
   },
   methods: {
-    selectState: function selectState() {
+    selectUserState: function selectUserState() {
       var _this = this;
 
       this.states = [];
-      axios.post('/admin/profile/getstate', {
+      axios.post('/user/profile/getstate', {
         id: this.countryId
       }).then(function (response) {
         _this.states.push(response.data);
 
         _this.$forceUpdate();
+      });
+    },
+    selectState: function selectState() {
+      var _this2 = this;
+
+      this.states = [];
+      axios.post('/admin/profile/getstate', {
+        id: this.countryId
+      }).then(function (response) {
+        _this2.states.push(response.data);
+
+        _this2.$forceUpdate();
       });
     },
     deleteRow: function deleteRow($id, $name) {

@@ -25,9 +25,7 @@ Route::post('/register/create',[
     'as' => 'register.store'
 ]);
 
-
-
-Route::group(['prefix' => 'admin','middleware' => 'verified'],function (){
+Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],function (){
 
     Route::get('/dashboard',[
         'uses' => 'AdminController@index',
@@ -283,6 +281,124 @@ Route::group(['prefix' => 'admin','middleware' => 'verified'],function (){
         ]);
     });
 
+    Route::group(['prefix' => 'product'],function (){
+        Route::get('/index',[
+            'uses' => 'ProductController@index',
+            'as' => 'product.index'
+        ]);
+        Route::get('/add',[
+            'uses' => 'ProductController@create',
+            'as' => 'product.create'
+        ]);
+    });
+
+    Route::group(['prefix' => 'size'],function (){
+       Route::get('/index',[
+          'uses' => 'SizeController@index',
+          'as' => 'size.index'
+       ]);
+        Route::get('/add',[
+            'uses' => 'SizeController@create',
+            'as' => 'size.create'
+        ]);
+        Route::post('/add',[
+            'uses' => 'SizeController@store',
+            'as' => 'size.store'
+        ]);
+        Route::get('/edit/{id}',[
+            'uses' => 'SizeController@edit',
+            'as' => 'size.edit'
+        ]);
+        Route::post('/edit/{id}',[
+            'uses' => 'SizeController@update',
+            'as' => 'size.update'
+        ]);
+
+        Route::post('/delete/{id}',[
+            'uses' => 'SizeController@destroy',
+            'as' => 'size.delete'
+        ]);
+    });
+
+    Route::group(['prefix' => 'color'],function (){
+       Route::get('/index',[
+          'uses' => 'ColorController@index',
+          'as' => 'color.index'
+       ]);
+        Route::get('/add',[
+            'uses' => 'ColorController@create',
+            'as' => 'color.add'
+        ]);
+        Route::post('/add',[
+            'uses' => 'ColorController@store',
+            'as' => 'color.store'
+        ]);
+        Route::get('/edit/{id}',[
+            'uses' => 'ColorController@edit',
+            'as' => 'color.edit'
+        ]);
+        Route::post('/edit/{id}',[
+            'uses' => 'ColorController@update',
+            'as' => 'color.update'
+        ]);
+        Route::post('/delete/{id}',[
+            'uses' => 'ColorController@destroy',
+            'as' => 'color.delete'
+        ]);
+    });
+    Route::group(['prefix' => 'discount'],function (){
+       Route::get('/index',[
+         'uses' => 'DiscountController@index',
+         'as' => 'discount.index'
+       ]);
+       Route::get('/add',[
+           'uses' => 'DiscountController@create',
+           'as' => 'discount.create'
+       ]);
+        Route::post('/add',[
+            'uses' => 'DiscountController@store',
+            'as' => 'discount.store'
+        ]);
+        Route::get('/edit/{id}',[
+            'uses' => 'DiscountController@edit',
+            'as' => 'discount.edit'
+        ]);
+        Route::post('/edit/{id}',[
+            'uses' => 'DiscountController@update',
+            'as' => 'discount.update'
+        ]);
+        Route::post('/delete/{id}',[
+            'uses' => 'DiscountController@destroy',
+            'as' => 'discount.delete'
+        ]);
+    });
+
+});
+
+Route::group(['prefix' => 'user','middleware' => ['verified','isUser']],function (){
+    Route::get('/',[
+        'uses' => 'UserController@index',
+        'as' => 'user.index'
+    ]);
+    Route::group(['prefix' => 'profile'],function (){
+       Route::get('/edit/{id}',[
+           'uses' => 'UserController@edit',
+           'as' => 'user.edit'
+       ]);
+       Route::post('/edit/{id}',[
+           'uses' => 'UserController@update',
+           'as' => 'user.update'
+       ]);
+       Route::post('/getstate',[
+           'uses' => 'UserController@getstate',
+           'as' => 'user.getstate'
+       ]);
+
+       Route::post('/changepassword/{id}',[
+           'uses' => 'UserController@changepassword',
+           'as' => 'user.changepassword'
+       ]);
+    });
 });
 
 Auth::routes(['verify' => true]);

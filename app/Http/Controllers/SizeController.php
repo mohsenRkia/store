@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Size;
+use App\Models\Size;
 use Illuminate\Http\Request;
 
 class SizeController extends Controller
@@ -14,7 +14,8 @@ class SizeController extends Controller
      */
     public function index()
     {
-        //
+        $sizes = Size::all();
+        return view('admin.size.index',compact(['sizes']));
     }
 
     /**
@@ -24,7 +25,7 @@ class SizeController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.size.create');
     }
 
     /**
@@ -33,9 +34,22 @@ class SizeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $r)
     {
-        //
+        $r->validate([
+            'name' => 'required|max:5|string|alpha'
+        ]);
+
+        $create = Size::create([
+            'name' => $r->name
+        ]);
+
+        if ($create){
+            createAlert("New Size has added successfully!!");
+            return redirect()->route('size.index');
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -55,9 +69,10 @@ class SizeController extends Controller
      * @param  \App\Size  $size
      * @return \Illuminate\Http\Response
      */
-    public function edit(Size $size)
+    public function edit($id)
     {
-        //
+        $size = Size::find($id);
+        return view('admin.size.edit',compact(['size']));
     }
 
     /**
@@ -67,9 +82,22 @@ class SizeController extends Controller
      * @param  \App\Size  $size
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Size $size)
+    public function update(Request $r,$id)
     {
-        //
+        $r->validate([
+            'name' => 'required|max:5|string|alpha'
+        ]);
+
+        $update = Size::find($id)->update([
+           'name' => $r->name
+        ]);
+
+        if ($update){
+            createAlert("The size has edited successfully!!");
+            return redirect()->route('size.index');
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -78,8 +106,9 @@ class SizeController extends Controller
      * @param  \App\Size  $size
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Size $size)
+    public function destroy($id)
     {
-        //
+        $delete = Size::find($id);
+        $delete->delete();
     }
 }

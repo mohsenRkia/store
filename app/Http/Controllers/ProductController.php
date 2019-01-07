@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -25,7 +27,15 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.post.create');
+        $cats = Category::where('isparent',0)->paginate(10);
+        $categorys = [];
+        foreach ($cats as $cat){
+            //$item  = Category::where('isparent',$cat->id)->get();
+            $item  = Category::where('isparent',$cat->id)->with('subcategories')->get();
+            $categorys[$cat->name][$cat->id] = $item->toArray();
+        }
+        //dd($categorys);
+        return view('admin.post.create',compact(['categorys']));
     }
 
     /**

@@ -102,6 +102,29 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],functi
 
     });
 
+    Route::group(['prefix' => 'subcategory'],function (){
+        Route::get('/add',[
+            'uses' => 'SubcategoryController@create',
+            'as' => 'subcategory.add'
+        ]);
+        Route::post('/add',[
+            'uses' => 'SubcategoryController@store',
+            'as' => 'subcategory.store'
+        ]);
+        Route::get('/edit/{id}',[
+            'uses' => 'SubcategoryController@edit',
+            'as' => 'subcategory.edit'
+        ]);
+        Route::post('/edit/{id}',[
+            'uses' => 'SubcategoryController@update',
+            'as' => 'subcategory.update'
+        ]);
+        Route::post('/delete/{id}',[
+            'uses' => 'SubcategoryController@destroy',
+            'as' => 'subcategory.delete'
+        ]);
+    });
+
     Route::group(['prefix' => 'slider'],function (){
        Route::get('/',[
            'uses' => 'SliderController@index',
@@ -372,7 +395,6 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],functi
             'as' => 'discount.delete'
         ]);
     });
-
 });
 
 Route::group(['prefix' => 'user','middleware' => ['verified','isUser']],function (){

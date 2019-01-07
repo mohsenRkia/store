@@ -24,7 +24,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categorys = Category::all();
+        $categorys = Category::where('isparent',0)->get();
+
         return view('admin.category.create',compact(['categorys']));
     }
 
@@ -65,9 +66,11 @@ class CategoryController extends Controller
         $cats = Category::where('isparent',0)->paginate(10);
         $categorys = [];
         foreach ($cats as $cat){
-           $item  = Category::where('isparent',$cat->id)->get();
+           //$item  = Category::where('isparent',$cat->id)->get();
+           $item  = Category::where('isparent',$cat->id)->with('subcategories')->get();
             $categorys[$cat->name][$cat->id] = $item->toArray();
         }
+        //dd($categorys);
         return view('admin.category.list',compact(['categorys']));
     }
 
@@ -90,7 +93,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $allCategory = Category::all();
+        $allCategory = Category::where('isparent',0)->get();
         $category = Category::find($id);
         if ($category->isparent == 0){
             $parent = 0;

@@ -13,6 +13,7 @@
         </div>
         <!-- End Page Header -->
         <a href="{{route('category.add')}}" class="mb-2 btn btn-info mr-2">Add new Category</a>
+        <a href="{{route('subcategory.add')}}" class="mb-2 btn btn-info mr-2">Add new SubCategory</a>
 
         <div class="row">
             <div class="col">
@@ -76,6 +77,29 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @foreach($value['subcategories'] as $sub)
+                                        <tr class="alert alert-success">
+                                            <td class="text-white">{{$sub['name']}}</td>
+                                            <td></td>
+                                            <td>
+                                                <div class="blog-comments__actions">
+                                                    <div class="btn-group btn-group-sm">
+                                                        <button type="button" class="btn btn-white" @click="deleteRow({{$sub['id']}},'subcategory')">
+                              <span class="text-danger">
+                                <i class="material-icons">clear</i>
+                              </span> Delete
+                                                        </button>
+                                                        <a href="{{route('subcategory.edit',['id' => $sub['id']])}}" class="btn btn-white">
+                              <span class="text-light">
+                                <i class="material-icons">more_vert</i>
+                              </span> Edit
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
                                     @endforeach
                                 @endforeach
                             @endforeach

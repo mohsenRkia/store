@@ -73,27 +73,21 @@
                     </div>
                     <div class='card-body p-0'>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item px-3 pb-2">
-                                <div class="custom-control custom-checkbox mb-1">
-                                    <input type="checkbox" class="custom-control-input" id="category1" checked>
-                                    <label class="custom-control-label" for="category1">Uncategorized</label>
-                                </div>
-                                <div class="custom-control custom-checkbox mb-1">
-                                    <input type="checkbox" class="custom-control-input" id="category2" checked>
-                                    <label class="custom-control-label" for="category2">Design</label>
-                                </div>
-                                <div class="custom-control custom-checkbox mb-1">
-                                    <input type="checkbox" class="custom-control-input" id="category3">
-                                    <label class="custom-control-label" for="category3">Development</label>
-                                </div>
-                                <div class="custom-control custom-checkbox mb-1">
-                                    <input type="checkbox" class="custom-control-input" id="category4">
-                                    <label class="custom-control-label" for="category4">Writing</label>
-                                </div>
-                                <div class="custom-control custom-checkbox mb-1">
-                                    <input type="checkbox" class="custom-control-input" id="category5">
-                                    <label class="custom-control-label" for="category5">Books</label>
-                                </div>
+                            <li class="list-group-item px-3 pb-2" style="height: 300px;overflow-y: scroll;">
+                                @foreach($categorys as $key => $category)
+                                    <h5>{{$key}}</h5>
+                                    @foreach($category as $cats)
+                                        @foreach($cats as $cat)
+                                        <h6 style="margin-left: 15px;">+ {{$cat['name']}}</h6>
+                                            @foreach($cat['subcategories'] as $sub)
+                                                <div class="custom-control custom-checkbox mb-1" style="margin-left: 35px;">
+                                                    <input type="checkbox" class="custom-control-input" id="category{{$sub['id']}}" value="{{$sub['id']}}">
+                                                    <label class="custom-control-label" for="category{{$sub['id']}}">{{$sub['name']}}</label>
+                                                </div>
+                                            @endforeach
+                                        @endforeach
+                                    @endforeach
+                                @endforeach
                             </li>
                             <li class="list-group-item d-flex px-3">
                                 <div class="input-group">

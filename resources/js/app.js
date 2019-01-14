@@ -21,6 +21,9 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('selectstate-component', require('./components/SelectStateComponent.vue').default);
+Vue.component('selectuserstate-component', require('./components/SelectUserState.vue').default);
+Vue.component('draftproduct-component', require('./components/DraftProductComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -32,31 +35,9 @@ const app = new Vue({
     el: '#app',
     
     data:{
-        countryId:"",
-        states:[],
         
     },
     methods:{
-        selectUserState:function(){
-            this.states = [];
-            axios.post('/user/profile/getstate',{
-                id: this.countryId
-            }).then(response=>{
-                this.states.push(response.data);
-                this.$forceUpdate();
-            });
-
-        },
-        selectState:function(){
-            this.states = [];
-            axios.post('/admin/profile/getstate',{
-                id: this.countryId
-            }).then(response=>{
-                this.states.push(response.data);
-                this.$forceUpdate();
-            });
-
-        },
         deleteRow:function ($id,$name) {
             swal({
                 title: "Are you sure?",

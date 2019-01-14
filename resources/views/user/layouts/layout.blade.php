@@ -23,9 +23,7 @@
         <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
             @include('user.layouts.navbar')
             <!-- / .main-navbar -->
-                <div id="app">
                 @yield('content')
-                </div>
             @include('user.layouts.footer')
         </main>
     </div>

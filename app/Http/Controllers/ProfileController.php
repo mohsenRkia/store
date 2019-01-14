@@ -76,6 +76,7 @@ class ProfileController extends Controller
             $date = explode("-",$date);
             $date = (object)['year' => $date[0],'month' => $date[1],'day' => $date[2]];
 
+
             return view('admin.profile.index',compact(['profile','countries','date']));
         }
         return view('admin.profile.index',compact(['profile','countries']));

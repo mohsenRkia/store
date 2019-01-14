@@ -37,7 +37,7 @@ class SizeController extends Controller
     public function store(Request $r)
     {
         $r->validate([
-            'name' => 'required|max:5|string|alpha'
+            'name' => 'required|max:30|string'
         ]);
 
         $create = Size::create([
@@ -85,7 +85,7 @@ class SizeController extends Controller
     public function update(Request $r,$id)
     {
         $r->validate([
-            'name' => 'required|max:5|string|alpha'
+            'name' => 'required|max:30|string'
         ]);
 
         $update = Size::find($id)->update([

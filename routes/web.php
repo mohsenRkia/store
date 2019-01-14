@@ -313,6 +313,23 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],functi
             'uses' => 'ProductController@create',
             'as' => 'product.create'
         ]);
+        Route::post('/add',[
+            'uses' => 'ProductController@store',
+            'as' => 'product.store'
+        ]);
+        Route::post('/draft',[
+            'uses' => 'ProductController@draft',
+            'as' => 'product.draft'
+        ]);
+        Route::post('/getimage',[
+            'uses' => 'ProductController@getImage',
+            'as' => 'product.getimage'
+        ]);
+        Route::post('/uploadimage',[
+            'uses' => 'ProductController@uploadimage',
+            'as' => 'product.uploadimage'
+        ]);
+
     });
 
     Route::group(['prefix' => 'size'],function (){

@@ -3,7 +3,7 @@
 @section('content')
 
 
-    <div class="main-content-container container-fluid px-4">
+    <div id="app" class="main-content-container container-fluid px-4">
         <!-- Page Header -->
         <div class="page-header row no-gutters py-4">
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
@@ -28,13 +28,44 @@
                             <thead class="bg-light">
                             <tr>
                                 <th scope="col" class="border-0">Title</th>
+                                <th scope="col" class="border-0">Price</th>
+                                <th scope="col" class="border-0">Quantity</th>
+                                <th scope="col" class="border-0">Status</th>
                                 <th scope="col" class="border-0">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($products as $product)
                                 <tr>
-                                    <td>{{$product->title}}</td>
+                                    <td>{{$product->name}}</td>
+                                    <td>
+                                        @if(!$product->offerprice)
+                                            @foreach($product->prices as $price)
+                                                @if($loop->last)
+                                                {{$price->originalprice}}
+                                                @endif
+                                            @endforeach
+                                            @else
+                                            @foreach($product->prices as $price)
+                                                @if($loop->last)
+                                                    <del><span class="text-danger">{{$price->originalprice}}</span></del>
+                                                @endif
+                                            @endforeach
+                                                <br>
+                                                {{$product->offerprice}}
+                                        @endif
+                                    </td>
+                                    <td>{{$product->productquantity}}</td>
+                                    <td>
+                                        @switch($product->salable)
+                                            @case(1)
+                                        <span class="btn btn-success">Saleable</span>
+                                            @break
+                                            @case(0)
+                                            <span class="btn btn-danger">UnSaleable</span>
+                                            @break
+                                        @endswitch
+                                    </td>
                                     <td>
                                         <div class="blog-comments__actions">
                                             <div class="btn-group btn-group-sm">

@@ -1,7 +1,7 @@
 @extends('user.layouts.layout')
 
 @section('content')
-<div class="main-content-container container-fluid px-4">
+<div id="app" class="main-content-container container-fluid px-4">
     <!-- Page Header -->
     <div class="page-header row no-gutters py-4">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
@@ -105,30 +105,8 @@
                                     <div class="form-group">
                                         <label for="feInputAddress">Address</label>
                                         <input type="text" name="address" class="form-control" id="feInputAddress" placeholder="1234 Main St" value="{{$profile->profile->address}}"> </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="feInputState">Country</label>
-                                            <select id="feInputState" @change="selectUserState" class="form-control" v-model="countryId">
-                                                <option value="">{{$profile->profile->state->country->name}}</option>
-                                                @foreach($countries as $key => $name)
-                                                <option value="{{$key}}">{{$name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="feInputState">State</label>
-                                            <select id="feInputState" class="form-control" name="state">
-                                                <option value="{{$profile->profile->state->id}}">{{$profile->profile->state->name}}</option>
-                                                <option value="">----</option>
-                                                <template v-for="state in states">
-                                                <option v-for="s in state" :value="s.id">@{{ s.name }}</option>
-                                                </template>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <label for="inputZip">Zip</label>
-                                            <input type="text" name="zipcode" class="form-control" id="inputZip" value="{{$profile->profile->zipcode}}"> </div>
-                                    </div>
+                                    <selectuserstate-component :list-countries='@json($countries)' zip-code="{{$profile->profile->zipcode}}" default-state-name="{{$profile->profile->state->name}}" default-stat-value="{{$profile->profile->state->id}}" default-country="{{$profile->profile->state->country->name}}"></selectuserstate-component>
+
                                     <hr>
                                     <h5>BirthDate</h5>
                                     <div class="form-row">

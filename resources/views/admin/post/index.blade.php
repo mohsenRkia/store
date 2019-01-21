@@ -69,12 +69,12 @@
                                     <td>
                                         <div class="blog-comments__actions">
                                             <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-white" @click="deleteRow({{$product->id}},'level')">
+                                                <button type="button" class="btn btn-white" @click="deleteRow({{$product->id}},'product')">
                               <span class="text-danger">
                                 <i class="material-icons">clear</i>
                               </span> Delete
                                                 </button>
-                                                <a href="{{route('level.edit',['id' => $product->id])}}" class="btn btn-white">
+                                                <a href="{{route('product.edit',['id' => $product->id])}}" class="btn btn-white">
                               <span class="text-light">
                                 <i class="material-icons">more_vert</i>
                               </span> Edit

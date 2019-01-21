@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Image;
+use App\Models\Product;
 use App\Models\Profile;
 use App\Models\State;
 use Illuminate\Notifications\Notifiable;
@@ -39,5 +40,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function image()
     {
         return $this->morphOne(Image::class,'imageable');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }

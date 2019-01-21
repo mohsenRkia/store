@@ -19,15 +19,15 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $profile = User::find($id)->with(['profile' => function($p){
+        $profile = User::with(['profile' => function($p){
             $p->with(['state' => function($s){
                 $s->with('country:id,name');
                 $s->select(["id","name","country_id"]);
             }]);
-        }])->with('image')->first(["id","name","email"]);
+        }])->with('image')->find($id);
         $countries = Country::pluck("name","id");
         $birthdate = $profile->profile->birthdate;
-        if ($birthdate){
+        if (!$birthdate == null){
             $explode = explode(" ",$birthdate);
             $date = $explode[0];
             $date = explode("-",$date);
@@ -35,7 +35,8 @@ class UserController extends Controller
 
             return view('user.profile.index',compact(['profile','countries','date']));
         }
-        return view('user.profile.index',compact(['profile','countries']));
+        $date = null;
+        return view('user.profile.index',compact(['profile','countries','date']));
     }
 
     public function update($id,Request $r)

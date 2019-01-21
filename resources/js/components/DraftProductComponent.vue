@@ -15,9 +15,6 @@
 </template>
 
 <script>
-    //export default {
-    //    name: "DraftProduct"
-    //}
     new Vue({
         el: '#draft-product' ,
         data:{

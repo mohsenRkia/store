@@ -105,15 +105,22 @@
                                     <div class="form-group">
                                         <label for="feInputAddress">Address</label>
                                         <input type="text" name="address" class="form-control" id="feInputAddress" placeholder="1234 Main St" value="{{$profile->profile->address}}"> </div>
+                                    @if($profile->profile->state)
                                     <selectstate-component :list-countries='@json($countries)' zip-code="{{$profile->profile->zipcode}}" default-state-name="{{$profile->profile->state->name}}" default-stat-value="{{$profile->profile->state->id}}" default-country="{{$profile->profile->state->country->name}}"></selectstate-component>
-
+                                    @else
+                                        <selectstate-component :list-countries='@json($countries)' zip-code="{{$profile->profile->zipcode}}" default-state-name="Choose" default-stat-value="" default-country="Choose"></selectstate-component>
+                                    @endif
                                     <hr>
                                     <h5>BirthDate</h5>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="feInputState">Year</label>
                                             <select id="feInputState" class="form-control" name="year">
+                                                @if($date)
                                                 <option value="{{$date->year}}">{{$date->year}}</option>
+                                                @else
+                                                    <option value="">Year</option>
+                                                @endif
                                                 @for($i=1900;$i<2020;$i++)
                                                 <option value="{{$i}}">{{$i}}</option>
                                                 @endfor
@@ -122,7 +129,11 @@
                                         <div class="form-group col-md-4">
                                             <label for="feInputState">Month</label>
                                             <select id="feInputState" class="form-control" name="month">
+                                                @if($date)
                                                 <option value="{{$date->month}}">{{$date->month}}</option>
+                                                @else
+                                                    <option value="">Month</option>
+                                                @endif
                                                 @for($i=1;$i<13;$i++)
                                                 <option value="{{$i}}">{{$i}}</option>
                                                 @endfor
@@ -131,7 +142,11 @@
                                         <div class="form-group col-md-2">
                                             <label for="feInputState">Day</label>
                                             <select id="feInputState" class="form-control" name="day">
+                                                @if(!$date == null)
                                                 <option value="{{$date->day}}">{{$date->day}}</option>
+                                                @else
+                                                <option value="">Day</option>
+                                                @endif
                                                 @for($i=1;$i<32;$i++)
                                                 <option value="{{$i}}">{{$i}}</option>
                                                     @endfor

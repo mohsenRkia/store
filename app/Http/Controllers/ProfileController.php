@@ -62,24 +62,30 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $profile = User::find($id)->with(['profile' => function($p){
+        //$profile = User::find($id)->with(['profile' => function($p){
+        //    $p->with(['state' => function($s){
+        //        $s->with('country:id,name');
+        //        $s->select(["id","name","country_id"]);
+        //    }]);
+        //}])->with('image')->first(["id","name","email"]);
+        $profile = User::with(['profile' => function($p){
             $p->with(['state' => function($s){
                 $s->with('country:id,name');
                 $s->select(["id","name","country_id"]);
             }]);
-        }])->with('image')->first(["id","name","email"]);
+        }])->with('image')->find($id);
         $countries = Country::pluck("name","id");
         $birthdate = $profile->profile->birthdate;
-        if ($birthdate){
+        if (!$birthdate == null){
             $explode = explode(" ",$birthdate);
             $date = $explode[0];
             $date = explode("-",$date);
             $date = (object)['year' => $date[0],'month' => $date[1],'day' => $date[2]];
 
-
             return view('admin.profile.index',compact(['profile','countries','date']));
         }
-        return view('admin.profile.index',compact(['profile','countries']));
+        $date = null;
+        return view('admin.profile.index',compact(['profile','countries','date']));
     }
 
     /**
@@ -106,7 +112,7 @@ class ProfileController extends Controller
 
         ]);
 
-        User::where('id',$id)->update(['email' => $r->email]);
+        User::find($id)->update(['email' => $r->email]);
 
         if ($r->file('avatar')){
             $file = $r->file('avatar');
@@ -116,15 +122,18 @@ class ProfileController extends Controller
             $isImageable = Image::where([['imageable_type','app\user'],['imageable_id',$id]])->get();
             if ($move){
                 if (count($isImageable) == 1){
-                    Image::where([['imageable_type','app\user'],['imageable_id',$id]])->update([
+                    Image::where([['imageable_type',User::class],['imageable_id',$id]])->update([
                         'url' => $fileName
                     ]);
                 }else{
-                    Image::create([
-                        'url' => $fileName,
-                        'imageable_id' => $id,
-                        'imageable_type' => 'app\user'
-                    ]);
+                    $image = new Image(['url' => $fileName]);
+                    $user = User::find($id);
+                    $user->image()->save($image);
+                    //Image::create([
+                    //    'url' => $fileName,
+                    //    'imageable_id' => $id,
+                    //    'imageable_type' => 'app\user'
+                    //]);
                 }
             }else{
                 return redirect()->back();

@@ -317,6 +317,14 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],functi
             'uses' => 'ProductController@store',
             'as' => 'product.store'
         ]);
+        Route::get('/edit/{id}',[
+            'uses' => 'ProductController@edit',
+            'as' => 'product.edit'
+        ]);
+        Route::post('/edit/{id}',[
+            'uses' => 'ProductController@update',
+            'as' => 'product.update'
+        ]);
         Route::post('/draft',[
             'uses' => 'ProductController@draft',
             'as' => 'product.draft'
@@ -329,6 +337,12 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],functi
             'uses' => 'ProductController@uploadimage',
             'as' => 'product.uploadimage'
         ]);
+        Route::post('/delete/{id}',[
+            'uses' => 'ProductController@destroy',
+            'as' => 'product.delete'
+        ]);
+        Route::post('/image/delete/{id}','ProductController@deleteimage');
+        Route::post('/image/getlist/{id}','ProductController@getlist');
 
     });
 

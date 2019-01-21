@@ -24,6 +24,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('selectstate-component', require('./components/SelectStateComponent.vue').default);
 Vue.component('selectuserstate-component', require('./components/SelectUserState.vue').default);
 Vue.component('draftproduct-component', require('./components/DraftProductComponent.vue').default);
+Vue.component('imageproduct-component', require('./components/ImagesProductComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

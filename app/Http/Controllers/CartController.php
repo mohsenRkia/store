@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Cart;
+use App\Models\Basket;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -44,9 +44,9 @@ class CartController extends Controller
      * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function show(Cart $cart)
+    public function show()
     {
-        //
+
     }
 
     /**

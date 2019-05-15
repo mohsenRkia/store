@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Basket;
+use App\Models\Basket;
+use App\Models\Product;
+use App\Models\Productprice;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BasketController extends Controller
 {
@@ -81,5 +85,35 @@ class BasketController extends Controller
     public function destroy(Basket $basket)
     {
         //
+    }
+
+    public function addtobasket($id,Request $r)
+    {
+        $r->validate([
+            'size' => 'required|integer',
+            'color' => 'required|integer',
+            'productqty' => 'required|integer|gt:0|lte:10'
+        ]);
+        $userID = Auth::id();
+        $basket = new Basket();
+        $product = Product::find($id);
+        $price = Productprice::where('product_id',$id)->orderBy('created_at','DESC')->first();
+        $price = $price->originalprice;
+        if ($product->offerprice){
+            $price = $product->offerprice;
+        }
+
+        $basket->create([
+            'user_id' => $userID,
+            'product_id' => $id,
+            'size_id' => $r->size,
+            'color_id' => $r->color,
+            'productqty' => $r->productqty,
+            'originalprice' => $price,
+            'totalprice' => $price * $r->productqty
+        ]);
+
+        return redirect()->back();
+
     }
 }

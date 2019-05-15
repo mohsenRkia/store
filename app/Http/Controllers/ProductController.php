@@ -143,9 +143,17 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id,$slug)
     {
-        //
+        $product = Product::with(['prices' => function($pr){
+            $pr->orderBy('id','DESC')->first();
+        }])->with('colors')->with('sizes')->with('images')->find($id);
+        if ($slug == $product->slug){
+            return view('site.pages.product.view',compact(['product']));
+            //dd($product->toArray());
+        }else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**
@@ -289,20 +297,20 @@ class ProductController extends Controller
     public function draft(Request $r)
     {
         $r->validate([
-            'user_id' => 'required|numeric',
+            'user_id' => 'required|integer',
             'name' => 'required|string|max:150',
             'description' => 'required|string',
             'images' => 'required',
             'images.*' => 'image|dimensions:max_width:1000,max_height:1000,min_height:100,min_width:100|between:20,1000',
             'originallprice' => 'required|',
             'offerprice' => 'nullable|numeric',
-            'quantity' => 'required|numeric|max:1000',
+            'quantity' => 'required|integer|max:1000',
             'weight' => 'nullable|numeric',
             'subcategory' => 'required',
-            'subcategory.*' => 'numeric',
-            'discount_id' => 'nullable|numeric',
-            'color.*' => 'nullable|numeric',
-            'size.*' => 'nullable|numeric'
+            'subcategory.*' => 'integer',
+            'discount_id' => 'nullable|integer',
+            'color.*' => 'nullable|integer',
+            'size.*' => 'nullable|integer'
         ]);
         $create = Product::create([
             'user_id' => $r->user_id,
@@ -374,5 +382,6 @@ class ProductController extends Controller
         $images = Image::where('imageable_type',Product::class)->where('imageable_id',$productId)->get();
         return json_encode($images);
     }
+
 
 }

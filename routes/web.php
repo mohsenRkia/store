@@ -25,6 +25,16 @@ Route::post('/register/create',[
     'as' => 'register.store'
 ]);
 
+Route::get('/product/{id}/{slug}',[
+    'uses' => 'ProductController@show',
+    'as' => 'site.product.show'
+]);
+Route::post('/product/addtobasket/{id}',[
+    'uses' => 'BasketController@addtobasket',
+    'as' => 'site.product.addtobasket'
+]);
+
+
 Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],function (){
 
     Route::get('/dashboard',[

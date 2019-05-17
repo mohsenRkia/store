@@ -7,14 +7,14 @@
     <aside id="colorlib-hero" class="breadcrumbs">
         <div class="flexslider">
             <ul class="slides">
-                <li style="background-image: url('/site/images/cover-img-1.jpg');">
+                <li style="background-image: url(images/cover-img-1.jpg);">
                     <div class="overlay"></div>
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
                                 <div class="slider-text-inner text-center">
-                                    <h1>Product Detail</h1>
-                                    <h2 class="bread"><span><a href="{{route('home.index')}}">Home</a></span> <span><a href="shop.html">Product</a></span> <span>Product Detail</span></h2>
+                                    <h1>Shopping Cart</h1>
+                                    <h2 class="bread"><span><a href="index.html">Home</a></span> <span><a href="shop.html">Product</a></span> <span>Shopping Cart</span></h2>
                                 </div>
                             </div>
                         </div>
@@ -23,258 +23,103 @@
             </ul>
         </div>
     </aside>
+
     <div class="colorlib-shop">
         <div class="container">
-            @if($errors->any())
-            <ul style="list-style: none">
-                @foreach($errors->all() as $error)
-                <li class="alert-danger">
-                    {{$error}}
-                </li>
-                @endforeach
-            </ul>
-            @endif
-            <div class="row row-pb-lg">
+            <div class="row row-pb-md">
                 <div class="col-md-10 col-md-offset-1">
-                    <div class="product-detail-wrap">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="product-entry">
-                                    @foreach($product->images as $key => $image)
-                                    @if($key == 0)
-                                    <div class="product-img" style="background-image: url('/uploads/images/products/{{$image->url}}');">
-                                        <p class="tag"><span class="sale">Sale</span></p>
-                                    </div>
-                                    @endif
-                                    @endforeach
-                                    <div class="thumb-nail">
-                                        @foreach($product->images as $key => $image)
-                                        @if(!$key == 0 && $key <= 3)
-                                        <a href="#" class="thumb-img" style="background-image: url('/uploads/images/products/{{$image->url}}');"></a>
-                                        @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-7">
-                                <div class="desc">
-                                    <h3>{{$product->name}}</h3>
-                                    <p class="price">
-                                        @if($product->offerprice > 0)
-                                        @foreach($product->prices as $originalprice)
-                                    <div class="text-sale" style="font-size: 12px;font-weight: bold;"><del>${{$originalprice->originalprice}}</del></div>
-                                    @endforeach
-                                    <div class="text-danger" style="font-size: 18px;font-weight: bold;">${{$product->offerprice}}</div>
-                                    @else
-                                    @foreach($product->prices as $originalprice)
-                                    ${{$originalprice->originalprice}}
-                                    @endforeach
-                                    @endif
-                                    <span class="rate text-right">
-												<i class="icon-star-full"></i>
-												<i class="icon-star-full"></i>
-												<i class="icon-star-full"></i>
-												<i class="icon-star-full"></i>
-												<i class="icon-star-half"></i>
-												(74 Rating)
-											</span>
-                                    </p>
-                                    <p>
-                                        {{$product->description}}
-                                    </p>
-                                    <form action="{{route('site.product.addtobasket',['id' => $product->id])}}" method="POST">
-                                        @csrf
-                                        <div class="color-wrap">
-                                            <p class="color-desc">
-                                                Color:
-                                                <select name="color">
-                                                    @foreach($product->colors as $color)
-                                                    <option value="{{$color->id}}">{{$color->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </p>
-                                        </div>
-                                        <div class="size-wrap">
-                                            <p class="size-desc">
-                                                Size:
-                                                <select name="size" id="">
-                                                    @foreach($product->sizes as $size)
-                                                    <option value="{{$size->id}}">{{$size->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </p>
-                                        </div>
-                                        <div class="size-wrap">
-                                            <p class="size-desc">
-                                                <label for="productqty"></label>
-                                                Quantity:
-                                                <select name="productqty" id="productqty">
-                                                    <option value="0">Choose</option>
-                                                    @for($i = 1;$i<11;$i++)
-                                                    <option value="{{$i}}">{{$i}}</option>
-                                                    @endfor
-                                                </select>
-                                            </p>
-                                        </div>
-                                        <button class="btn btn-primary btn-addtocart" @click="addtobasket(productId)"><i class="icon-shopping-cart"> Add to Cart</i></button>
-                                    </form>
-                                </div>
-                            </div>
+                    <div class="process-wrap">
+                        <div class="process text-center active">
+                            <p><span>01</span></p>
+                            <h3>Shopping Cart</h3>
+                        </div>
+                        <div class="process text-center">
+                            <p><span>02</span></p>
+                            <h3>Checkout</h3>
+                        </div>
+                        <div class="process text-center">
+                            <p><span>03</span></p>
+                            <h3>Order Complete</h3>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row row-pb-md">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="product-name">
+                        <div class="one-forth text-center">
+                            <span>Product Details</span>
+                        </div>
+                        <div class="one-eight text-center">
+                            <span>Price</span>
+                        </div>
+                        <div class="one-eight text-center">
+                            <span>Quantity</span>
+                        </div>
+                        <div class="one-eight text-center">
+                            <span>Total</span>
+                        </div>
+                        <div class="one-eight text-center">
+                            <span>Remove</span>
+                        </div>
+                    </div>
+
+                    @foreach($baskets as $basket)
+                    <div class="product-cart">
+                        <div class="one-forth">
+                            <div class="product-img" style="background-image: url(images/item-6.jpg);">
+                            </div>
+                            <div class="display-tc">
+                                <h3>{{$basket->product->name}}</h3>
+                            </div>
+                        </div>
+                        <div class="one-eight text-center">
+                            <div class="display-tc">
+                                <span class="price">${{$basket->originalprice}}</span>
+                            </div>
+                        </div>
+                        <div class="one-eight text-center">
+                            <div class="display-tc">
+                                {{$basket->productqty}}
+                            </div>
+                        </div>
+                        <div class="one-eight text-center">
+                            <div class="display-tc">
+                                <span class="price">${{$basket->totalprice}}</span>
+                            </div>
+                        </div>
+                        <div class="one-eight text-center">
+                            <div class="display-tc">
+                                <a href="#" class="closed"></a>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+
+
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <div class="row">
-                        <div class="col-md-12 tabulation">
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#description">Description</a></li>
-                                <li><a data-toggle="tab" href="#manufacturer">Manufacturer</a></li>
-                                <li><a data-toggle="tab" href="#review">Reviews</a></li>
-                            </ul>
-                            <div class="tab-content">
-                                <div id="description" class="tab-pane fade in active">
-                                    <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
-                                    <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-                                    <ul>
-                                        <li>The Big Oxmox advised her not to do so</li>
-                                        <li>Because there were thousands of bad Commas</li>
-                                        <li>Wild Question Marks and devious Semikoli</li>
-                                        <li>She packed her seven versalia</li>
-                                        <li>tial into the belt and made herself on the way.</li>
-                                    </ul>
-                                </div>
-                                <div id="manufacturer" class="tab-pane fade">
-                                    <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
-                                    <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-
-                                </div>
-                                <div id="review" class="tab-pane fade">
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                            <h3>23 Reviews</h3>
-                                            <div class="review">
-                                                <div class="user-img" style="background-image: url(images/person1.jpg)"></div>
-                                                <div class="desc">
-                                                    <h4>
-                                                        <span class="text-left">Jacob Webb</span>
-                                                        <span class="text-right">14 March 2018</span>
-                                                    </h4>
-                                                    <p class="star">
-										   				<span>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-half"></i>
-										   					<i class="icon-star-empty"></i>
-									   					</span>
-                                                        <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-                                                    </p>
-                                                    <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
-                                                </div>
-                                            </div>
-                                            <div class="review">
-                                                <div class="user-img" style="background-image: url(images/person2.jpg)"></div>
-                                                <div class="desc">
-                                                    <h4>
-                                                        <span class="text-left">Jacob Webb</span>
-                                                        <span class="text-right">14 March 2018</span>
-                                                    </h4>
-                                                    <p class="star">
-										   				<span>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-half"></i>
-										   					<i class="icon-star-empty"></i>
-									   					</span>
-                                                        <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-                                                    </p>
-                                                    <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
-                                                </div>
-                                            </div>
-                                            <div class="review">
-                                                <div class="user-img" style="background-image: url(images/person3.jpg)"></div>
-                                                <div class="desc">
-                                                    <h4>
-                                                        <span class="text-left">Jacob Webb</span>
-                                                        <span class="text-right">14 March 2018</span>
-                                                    </h4>
-                                                    <p class="star">
-										   				<span>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-half"></i>
-										   					<i class="icon-star-empty"></i>
-									   					</span>
-                                                        <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-                                                    </p>
-                                                    <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
-                                                </div>
-                                            </div>
+                    <div class="total-wrap">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <form action="{{route('site.cart.check')}}" method="POST">
+                                    @csrf
+                                    <div class="row form-group">
+                                        <div class="col-md-9">
+                                            <input type="text" name="discount" class="form-control input-number" placeholder="Your Coupon Number...">
                                         </div>
-                                        <div class="col-md-4 col-md-push-1">
-                                            <div class="rating-wrap">
-                                                <h3>Give a Review</h3>
-                                                <p class="star">
-									   				<span>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-full"></i>
-									   					(98%)
-								   					</span>
-                                                    <span>20 Reviews</span>
-                                                </p>
-                                                <p class="star">
-									   				<span>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-empty"></i>
-									   					(85%)
-								   					</span>
-                                                    <span>10 Reviews</span>
-                                                </p>
-                                                <p class="star">
-									   				<span>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-empty"></i>
-									   					<i class="icon-star-empty"></i>
-									   					(98%)
-								   					</span>
-                                                    <span>5 Reviews</span>
-                                                </p>
-                                                <p class="star">
-									   				<span>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-empty"></i>
-									   					<i class="icon-star-empty"></i>
-									   					<i class="icon-star-empty"></i>
-									   					(98%)
-								   					</span>
-                                                    <span>0 Reviews</span>
-                                                </p>
-                                                <p class="star">
-									   				<span>
-									   					<i class="icon-star-full"></i>
-									   					<i class="icon-star-empty"></i>
-									   					<i class="icon-star-empty"></i>
-									   					<i class="icon-star-empty"></i>
-									   					<i class="icon-star-empty"></i>
-									   					(98%)
-								   					</span>
-                                                    <span>0 Reviews</span>
-                                                </p>
-                                            </div>
+                                        <div class="col-md-3">
+                                            <input type="submit" value="Apply" class="btn btn-success">
                                         </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-3 col-md-push-1 text-center">
+                                <div class="total">
+                                    <div class="grand-total">
+                                        <p><span><strong>Total:</strong></span> <span>${{$totalPriceItem}}</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -289,7 +134,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 text-center colorlib-heading">
-                    <h2><span>Similar Products</span></h2>
+                    <h2><span>Recommended Products</span></h2>
                     <p>We love to tell our successful far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                 </div>
             </div>

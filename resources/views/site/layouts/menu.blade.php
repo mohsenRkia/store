@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-xs-10 text-right menu-1">
                     <ul>
-                        <li class="active"><a href="index.html">Home</a></li>
+                        <li class="active"><a href="{{route('home.index')}}">Home</a></li>
                         <li class="has-dropdown">
                             <a href="shop.html">Shop</a>
                             <ul class="dropdown">
@@ -54,7 +54,7 @@
                         @endif
 
 
-                        <li><a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
+                        <li><a href="{{route('site.cart')}}"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
                     </ul>
                 </div>
             </div>

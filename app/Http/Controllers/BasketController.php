@@ -113,7 +113,7 @@ class BasketController extends Controller
             'totalprice' => $price * $r->productqty
         ]);
 
-        return redirect()->back();
+        return redirect()->route('site.cart');
 
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Basket extends Model
 {
-    public $fillable = [
+    protected $fillable = [
         'user_id',
         'product_id',
         'size_id',
@@ -15,4 +15,11 @@ class Basket extends Model
         'originalprice',
         'totalprice'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+
 }

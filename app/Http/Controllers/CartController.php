@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Basket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -46,6 +47,25 @@ class CartController extends Controller
      */
     public function show()
     {
+        if (Auth::check()){
+            $userId = Auth::id();
+            $baskets = Basket::where('user_id',$userId)->with('product')->get();
+
+            $totalPriceItem = [];
+
+            foreach ($baskets as $basket){
+                $totalPriceItem[] = $basket->totalprice;
+            }
+
+            $totalPriceItem = array_filter($totalPriceItem);
+            $totalPriceItem = array_sum($totalPriceItem);
+
+            //dd($totalPriceItem);
+            //dd($baskets->toArray());
+            return view('site.pages.product.cart',compact(['baskets','totalPriceItem']));
+        }else{
+            return redirect()->route('register');
+        }
 
     }
 
@@ -81,5 +101,19 @@ class CartController extends Controller
     public function destroy(Cart $cart)
     {
         //
+    }
+
+    public function check(Request $r)
+    {
+        if (!empty($r->input('discount')) > 0){
+            echo 'check discount';
+        }else{
+            return redirect()->action('CartController@applyOrders');
+        }
+    }
+
+    public function applyOrders()
+    {
+        echo 'apply';
     }
 }

@@ -41,6 +41,11 @@ class Product extends Model
     {
         return $this->belongsTo(Discount::class);
     }
+
+    public function baskets()
+    {
+        return $this->belongsToMany(Basket::class);
+    }
 }
 
 

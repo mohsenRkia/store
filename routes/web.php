@@ -33,6 +33,17 @@ Route::post('/product/addtobasket/{id}',[
     'uses' => 'BasketController@addtobasket',
     'as' => 'site.product.addtobasket'
 ]);
+Route::get('/cart',[
+    'uses' => 'CartController@show',
+    'as' => 'site.cart'
+]);
+
+Route::post('/cart',[
+    'uses' => 'CartController@check',
+    'as' => 'site.cart.check'
+]);
+
+Route::get('/cart/apply','CartController@applyOrders');
 
 
 Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],function (){

@@ -94,6 +94,33 @@
 <script src="/site/js/jquery.stellar.min.js"></script>
 <!-- Main -->
 <script src="/site/js/main.js"></script>
+<script src="/sweetalert.min.js"></script>
+@if(session()->has('editAlert'))
+    <script>
+        swal({
+            title: "{{session('editAlert.title')}}",
+            icon: "success",
+            button: "Ok!",
+        });
+    </script>
+
+@elseif(session()->has('createAlert'))
+    <script>
+        swal({
+            title: "{{session('createAlert.title')}}",
+            icon: "success",
+            button: "Ok!",
+        });
+    </script>
+@elseif(session()->has('warningAlert'))
+    <script>
+        swal({
+            title: "{{session('warningAlert.title')}}",
+            icon: "warning",
+            button: "Cancel!",
+        });
+    </script>
+@endif
 
 </body>
 </html>

@@ -67,10 +67,16 @@
                     @foreach($baskets as $basket)
                     <div class="product-cart">
                         <div class="one-forth">
-                            <div class="product-img" style="background-image: url(images/item-6.jpg);">
+                            @foreach($basket->product->images as $key => $productimage)
+                                @if($key == 0 )
+                            <div class="product-img" style="background-image: url('/uploads/images/products/{{$productimage->url}}');">
                             </div>
+                                @endif
+                            @endforeach
                             <div class="display-tc">
+                                <a href="{{route('site.product.show',['id' =>$basket->product->id , 'slug' => $basket->product->slug])}}">
                                 <h3>{{$basket->product->name}}</h3>
+                                </a>
                             </div>
                         </div>
                         <div class="one-eight text-center">
@@ -90,7 +96,7 @@
                         </div>
                         <div class="one-eight text-center">
                             <div class="display-tc">
-                                <a href="#" class="closed"></a>
+                                <button @click="deleteBasket({{$basket->id}},'Item')" class="btn btn-danger">Delete</button>
                             </div>
                         </div>
                     </div>

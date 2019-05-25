@@ -82,9 +82,10 @@ class BasketController extends Controller
      * @param  \App\Basket  $basket
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Basket $basket)
+    public function destroy($id)
     {
-        //
+        $item = Basket::find($id);
+        $item->delete();
     }
 
     public function addtobasket($id,Request $r)

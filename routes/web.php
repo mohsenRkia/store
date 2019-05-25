@@ -29,9 +29,13 @@ Route::get('/product/{id}/{slug}',[
     'uses' => 'ProductController@show',
     'as' => 'site.product.show'
 ]);
-Route::post('/product/addtobasket/{id}',[
+Route::post('/basket/add/{id}',[
     'uses' => 'BasketController@addtobasket',
     'as' => 'site.product.addtobasket'
+]);
+Route::post('/basket/deleteitem/{id}',[
+   'uses' => 'BasketController@destroy',
+   'as' => 'site.product.deleteitemfrombasket'
 ]);
 Route::get('/cart',[
     'uses' => 'CartController@show',
@@ -41,6 +45,14 @@ Route::get('/cart',[
 Route::post('/cart',[
     'uses' => 'CartController@check',
     'as' => 'site.cart.check'
+]);
+Route::get('/payment/verify',[
+    'uses' => 'PaymentController@verify',
+    'as' => 'payment.verify'
+]);
+Route::get('/payment/unverified',[
+    'uses' => 'PaymentController@unverified',
+    'as' => 'payment.unverified'
 ]);
 
 Route::get('/cart/apply','CartController@applyOrders');

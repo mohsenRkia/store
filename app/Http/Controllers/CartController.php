@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Basket;
+use App\Models\Factor;
+use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Shetabit\Payment\Facade\Payment;
+use Shetabit\Payment\Invoice;
 
 class CartController extends Controller
 {
@@ -49,7 +53,9 @@ class CartController extends Controller
     {
         if (Auth::check()){
             $userId = Auth::id();
-            $baskets = Basket::where('user_id',$userId)->with('product')->get();
+            $baskets = Basket::where('user_id',$userId)->with(['product' => function($q){
+                $q->with('images');
+            }])->get();
 
             $totalPriceItem = [];
 
@@ -98,9 +104,9 @@ class CartController extends Controller
      * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cart $cart)
+    public function destroy($id)
     {
-        //
+
     }
 
     public function check(Request $r)
@@ -114,6 +120,55 @@ class CartController extends Controller
 
     public function applyOrders()
     {
-        echo 'apply';
+        if (Auth::check()){
+
+            $userId = Auth::id();
+            $baskets = Basket::where('user_id',$userId)->with(['product' => function($q){
+                $q->with('images');
+            }])->get();
+
+            $totalPriceItem = [];
+
+            foreach ($baskets as $basket){
+                $totalPriceItem[] = $basket->totalprice;
+            }
+
+            $totalPriceItem = array_filter($totalPriceItem);
+            $totalPriceItem = array_sum($totalPriceItem);
+
+
+            $invoice = new Invoice;
+
+            $invoice->amount((int) $totalPriceItem);
+            $invoice->detail(['id'=>$userId]);
+            $invoiceAmount = $invoice->getAmount();
+            $url = route('payment.verify');
+            return Payment::callbackUrl($url)->purchase($invoice,function ($driver,$transactionId) use ($userId,$invoiceAmount){
+                $factor = new Factor();
+                $factorFind = Factor::where(['user_id'=>$userId,'status'=>0])->get();
+                if (count($factorFind) == 1){
+                    $factor->where(['user_id'=>$userId,'status'=>0])->update([
+                        'total' => $invoiceAmount,
+                        'factorcode' => $transactionId,
+                        'status' => 0
+                    ]);
+                }else{
+                    $factor->create([
+                        'user_id' => $userId,
+                        'total' => $invoiceAmount,
+                        //Remove all 0 from first of transactioncode
+                        'factorcode' => $transactionId,
+                        'status' => 0
+                    ]);
+                }
+
+            })->pay();
+
+
+
+
+        }else{
+            return redirect()->route('register');
+        }
     }
 }

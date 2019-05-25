@@ -116,7 +116,11 @@
                                                     </select>
                                                 </p>
                                             </div>
-                                            <button class="btn btn-primary btn-addtocart" @click="addtobasket(productId)"><i class="icon-shopping-cart"> Add to Cart</i></button>
+                                            @if(Auth::user())
+                                                <button class="btn btn-primary btn-addtocart" @click="addtobasket(productId)"><i class="icon-shopping-cart"> Add to Cart</i></button>
+                                                @else
+                                                <a href="{{route('login')}}" class="btn btn-danger">Login (To Order)</a>
+                                            @endif
                                         </form>
                                     </div>
                                 </div>

@@ -49675,6 +49675,27 @@ var app = new Vue({
   el: '#app',
   data: {},
   methods: {
+    deleteBasket: function deleteBasket($id, $name) {
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this " + $name + "!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      }).then(function (willDelete) {
+        if (willDelete) {
+          axios.post('/basket/deleteitem/' + $id).then(function (response) {
+            swal("Your " + $name + " has deleted successfully!", {
+              icon: "success"
+            }).then(function (response) {
+              location.reload();
+            });
+          });
+        } else {
+          swal("Your " + $name + " hasn't deleted!!");
+        }
+      });
+    },
     deleteRow: function deleteRow($id, $name) {
       swal({
         title: "Are you sure?",

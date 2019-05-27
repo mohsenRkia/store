@@ -70,6 +70,9 @@
                                                 ${{$originalprice->originalprice}}
                                             @endforeach
                                         @endif
+                                        @if($product->discount_id)
+                                            <div class="text-success" style="font-size: 18px;font-weight: bold;">+ %{{$product->discount->value}} Off</div>
+                                        @endif
                                         <span class="rate text-right">
 												<i class="icon-star-full"></i>
 												<i class="icon-star-full"></i>

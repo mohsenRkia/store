@@ -318,6 +318,38 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],functi
 
     });
 
+    Route::group(['prefix' => 'coupon'],function (){
+        Route::get('/',[
+            'uses' => 'CouponController@index',
+            'as' => 'coupon.index'
+        ]);
+
+        Route::get('/add',[
+            'uses' => 'CouponController@create',
+            'as' => 'coupon.add'
+        ]);
+
+        Route::post('/store',[
+            'uses' => 'CouponController@store',
+            'as' => 'coupon.store'
+        ]);
+
+        Route::get('/edit/{id}',[
+            'uses' => 'CouponController@edit',
+            'as' => 'coupon.edit'
+        ]);
+
+        Route::post('/edit/{id}',[
+            'uses' => 'CouponController@update',
+            'as' => 'coupon.update'
+        ]);
+
+        Route::post('/delete/{id}',[
+            'uses' => 'CouponController@destroy',
+            'as' => 'coupon.delete'
+        ]);
+    });
+
     Route::group(['prefix' => 'profile'],function (){
        Route::get('/edit/{id}',[
            'uses' => 'ProfileController@edit',

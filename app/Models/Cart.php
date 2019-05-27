@@ -11,7 +11,8 @@ class Cart extends Model
         'product_id',
         'factor_id',
         'productqty',
-        'totalprice'];
+        'totalprice',
+        'discount'];
 
 
 

@@ -57,11 +57,12 @@
                             <span>Quantity</span>
                         </div>
                         <div class="one-eight text-center">
-                            <span>Total</span>
+                            <span>Discount</span>
                         </div>
                         <div class="one-eight text-center">
-                            <span>Remove</span>
+                            <span>Total</span>
                         </div>
+
                     </div>
 
                     @foreach($baskets as $basket)
@@ -91,6 +92,17 @@
                         </div>
                         <div class="one-eight text-center">
                             <div class="display-tc">
+                                @if($basket->discount)
+                                    @if($basket->discount > 0)
+                                %{{$basket->discount}}
+                                    @else
+                                -
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+                        <div class="one-eight text-center">
+                            <div class="display-tc">
                                 <span class="price">${{$basket->totalprice}}</span>
                             </div>
                         </div>
@@ -105,6 +117,7 @@
 
                 </div>
             </div>
+            @if(count($baskets) > 0)
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <div class="total-wrap">
@@ -133,6 +146,7 @@
                     </div>
                 </div>
             </div>
+                @endif
         </div>
     </div>
 

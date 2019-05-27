@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Basket;
+use App\Models\Discount;
 use App\Models\Factor;
 use function foo\func;
 use Illuminate\Http\Request;
@@ -55,6 +56,7 @@ class CartController extends Controller
             $userId = Auth::id();
             $baskets = Basket::where('user_id',$userId)->with(['product' => function($q){
                 $q->with('images');
+                $q->with('discount');
             }])->get();
 
             $totalPriceItem = [];
@@ -66,7 +68,6 @@ class CartController extends Controller
             $totalPriceItem = array_filter($totalPriceItem);
             $totalPriceItem = array_sum($totalPriceItem);
 
-            //dd($totalPriceItem);
             //dd($baskets->toArray());
             return view('site.pages.product.cart',compact(['baskets','totalPriceItem']));
         }else{
@@ -111,15 +112,6 @@ class CartController extends Controller
 
     public function check(Request $r)
     {
-        if (!empty($r->input('discount')) > 0){
-            echo 'check discount';
-        }else{
-            return redirect()->action('CartController@applyOrders');
-        }
-    }
-
-    public function applyOrders()
-    {
         if (Auth::check()){
 
             $userId = Auth::id();
@@ -135,6 +127,8 @@ class CartController extends Controller
 
             $totalPriceItem = array_filter($totalPriceItem);
             $totalPriceItem = array_sum($totalPriceItem);
+
+
 
 
             $invoice = new Invoice;
@@ -170,5 +164,11 @@ class CartController extends Controller
         }else{
             return redirect()->route('register');
         }
+
+    }
+
+    public function applyOrders()
+    {
+
     }
 }

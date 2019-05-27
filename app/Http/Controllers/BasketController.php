@@ -97,11 +97,15 @@ class BasketController extends Controller
         ]);
         $userID = Auth::id();
         $basket = new Basket();
-        $product = Product::find($id);
-        $price = Productprice::where('product_id',$id)->orderBy('created_at','DESC')->first();
-        $price = $price->originalprice;
+        $product = Product::with('discount')->find($id);
+        $productPrice = Productprice::where('product_id',$id)->orderBy('created_at','DESC')->first();
+        $price = $productPrice->originalprice;
         if ($product->offerprice){
             $price = $product->offerprice;
+        }
+        if ($product->discount_id){
+            $value = $product->discount->value;
+            $price = $price - ($price * $value / 100);
         }
 
         $basket->create([
@@ -110,8 +114,9 @@ class BasketController extends Controller
             'size_id' => $r->size,
             'color_id' => $r->color,
             'productqty' => $r->productqty,
-            'originalprice' => $price,
-            'totalprice' => $price * $r->productqty
+            'originalprice' => ($product->offerprice)? $product->offerprice : $productPrice->originalprice,
+            'totalprice' => $price * $r->productqty,
+            'discount' => ($product->discount_id)? $product->discount->value : null
         ]);
 
         return redirect()->route('site.cart');

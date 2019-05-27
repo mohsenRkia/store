@@ -45,7 +45,8 @@ class PaymentController extends Controller
                         'product_id' => $basket->product_id,
                         'factor_id' => $factor->id,
                         'productqty' => $basket->productqty,
-                        'totalprice' => $basket->totalprice
+                        'totalprice' => $basket->totalprice,
+                        'discount' => ($basket->discount)? $basket->discount : null
 
                     ]);
                     if ($submit){

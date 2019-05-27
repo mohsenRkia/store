@@ -145,12 +145,12 @@ class ProductController extends Controller
      */
     public function show($id,$slug)
     {
-        $product = Product::with(['prices' => function($pr){
+        $product = Product::with('discount')->with(['prices' => function($pr){
             $pr->orderBy('id','DESC')->first();
         }])->with('colors')->with('sizes')->with('images')->find($id);
         if ($slug == $product->slug){
-            return view('site.pages.product.view',compact(['product']));
             //dd($product->toArray());
+            return view('site.pages.product.view',compact(['product']));
         }else{
             return redirect()->route('home.index');
         }

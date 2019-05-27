@@ -13,12 +13,18 @@ class Basket extends Model
         'color_id',
         'productqty',
         'originalprice',
-        'totalprice'
+        'totalprice',
+        'discount'
     ];
 
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function discount()
+    {
+        return $this->belongsTo(Discount::class);
     }
 
 

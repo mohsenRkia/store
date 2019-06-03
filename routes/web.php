@@ -37,15 +37,17 @@ Route::post('/basket/deleteitem/{id}',[
    'uses' => 'BasketController@destroy',
    'as' => 'site.product.deleteitemfrombasket'
 ]);
-Route::get('/cart',[
-    'uses' => 'CartController@show',
+Route::get('/baskets',[
+    'uses' => 'BasketController@show',
     'as' => 'site.cart'
-]);
+])->middleware('auth');
 
-Route::post('/cart',[
+Route::post('/cart/check',[
     'uses' => 'CartController@check',
     'as' => 'site.cart.check'
-]);
+])->middleware('auth');
+
+
 Route::get('/payment/verify',[
     'uses' => 'PaymentController@verify',
     'as' => 'payment.verify'
@@ -318,36 +320,50 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],functi
 
     });
 
-    Route::group(['prefix' => 'coupon'],function (){
+    Route::group(['prefix' => 'cart'],function (){
         Route::get('/',[
-            'uses' => 'CouponController@index',
-            'as' => 'coupon.index'
+            'uses' => 'CartController@index',
+            'as' => 'cart.index'
         ]);
 
-        Route::get('/add',[
-            'uses' => 'CouponController@create',
-            'as' => 'coupon.add'
+        Route::get('/indexsent',[
+            'uses' => 'CartController@indexSent',
+            'as' => 'cart.indexsent'
+        ]);
+
+
+
+        Route::get('/show/{id}',[
+            'uses' => 'CartController@show',
+            'as' => 'cart.show'
         ]);
 
         Route::post('/store',[
-            'uses' => 'CouponController@store',
-            'as' => 'coupon.store'
+            'uses' => 'CartController@store',
+            'as' => 'cart.store'
         ]);
 
         Route::get('/edit/{id}',[
-            'uses' => 'CouponController@edit',
-            'as' => 'coupon.edit'
+            'uses' => 'CartController@edit',
+            'as' => 'cart.edit'
         ]);
 
         Route::post('/edit/{id}',[
-            'uses' => 'CouponController@update',
-            'as' => 'coupon.update'
+            'uses' => 'CartController@update',
+            'as' => 'cart.update'
         ]);
 
         Route::post('/delete/{id}',[
-            'uses' => 'CouponController@destroy',
-            'as' => 'coupon.delete'
+            'uses' => 'CartController@destroy',
+            'as' => 'cart.delete'
         ]);
+    });
+
+    Route::group(['prefix' => 'factor'],function (){
+       Route::post('/approve/{id}',[
+           'uses' => 'FactorController@approve',
+           'as' => 'factor.approve'
+       ]) ;
     });
 
     Route::group(['prefix' => 'profile'],function (){

@@ -21,6 +21,7 @@ class CreateFactorsTable extends Migration
             $table->decimal('deliveryprice',8,2)->nullable();
             $table->decimal('total',8,2);
             $table->boolean('status');
+            $table->boolean('sent')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

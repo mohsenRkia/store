@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Basket;
+use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Discount;
 use App\Models\Factor;
 use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Shetabit\Payment\Facade\Payment;
 use Shetabit\Payment\Invoice;
 
@@ -20,7 +23,17 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $factors = Factor::where(['status' => 1,'sent' => 0])->with('carts')->with('user')->orderBy('id','DESC')->paginate(5);
+        //dd($factors->toArray());
+        return view('admin.cart.index',compact(['factors']));
+    }
+
+    public function indexSent()
+    {
+        $factors = Factor::where(['status' => 1,'sent' => 1])->with('carts')->with('user')->orderBy('id','DESC')->paginate(5);
+
+        //dd($factors->toArray());
+        return view('admin.cart.indexsent',compact(['factors']));
     }
 
     /**
@@ -50,30 +63,18 @@ class CartController extends Controller
      * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        if (Auth::check()){
-            $userId = Auth::id();
-            $baskets = Basket::where('user_id',$userId)->with(['product' => function($q){
-                $q->with('images');
-                $q->with('discount');
-            }])->get();
+        $factor = Factor::with(['carts' => function($c){
+            $c->with(['product' => function($p){
+                $p->with('images');
+            }]);
+        }])->with(['user' => function($u){
+            $u->with('profile');
+        }])->find($id);
 
-            $totalPriceItem = [];
-
-            foreach ($baskets as $basket){
-                $totalPriceItem[] = $basket->totalprice;
-            }
-
-            $totalPriceItem = array_filter($totalPriceItem);
-            $totalPriceItem = array_sum($totalPriceItem);
-
-            //dd($baskets->toArray());
-            return view('site.pages.product.cart',compact(['baskets','totalPriceItem']));
-        }else{
-            return redirect()->route('register');
-        }
-
+        //dd($factor->toArray());
+        return view('admin.cart.show',compact(['factor']));
     }
 
     /**
@@ -112,8 +113,6 @@ class CartController extends Controller
 
     public function check(Request $r)
     {
-        if (Auth::check()){
-
             $userId = Auth::id();
             $baskets = Basket::where('user_id',$userId)->with(['product' => function($q){
                 $q->with('images');
@@ -129,15 +128,13 @@ class CartController extends Controller
             $totalPriceItem = array_sum($totalPriceItem);
 
 
-
-
             $invoice = new Invoice;
 
             $invoice->amount((int) $totalPriceItem);
             $invoice->detail(['id'=>$userId]);
             $invoiceAmount = $invoice->getAmount();
             $url = route('payment.verify');
-            return Payment::callbackUrl($url)->purchase($invoice,function ($driver,$transactionId) use ($userId,$invoiceAmount){
+            return Payment::callbackUrl($url)->purchase($invoice,function ($driver,$transactionId) use ($r,$userId,$invoiceAmount){
                 $factor = new Factor();
                 $factorFind = Factor::where(['user_id'=>$userId,'status'=>0])->get();
                 if (count($factorFind) == 1){
@@ -150,25 +147,12 @@ class CartController extends Controller
                     $factor->create([
                         'user_id' => $userId,
                         'total' => $invoiceAmount,
-                        //Remove all 0 from first of transactioncode
                         'factorcode' => $transactionId,
                         'status' => 0
                     ]);
                 }
 
             })->pay();
-
-
-
-
-        }else{
-            return redirect()->route('register');
-        }
-
     }
 
-    public function applyOrders()
-    {
-
-    }
 }

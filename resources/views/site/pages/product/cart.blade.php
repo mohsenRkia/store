@@ -126,9 +126,6 @@
                                 <form action="{{route('site.cart.check')}}" method="POST">
                                     @csrf
                                     <div class="row form-group">
-                                        <div class="col-md-9">
-                                            <input type="text" name="discount" class="form-control input-number" placeholder="Your Coupon Number...">
-                                        </div>
                                         <div class="col-md-3">
                                             <input type="submit" value="Apply" class="btn btn-success">
                                         </div>

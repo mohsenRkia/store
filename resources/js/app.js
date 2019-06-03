@@ -27,6 +27,8 @@ Vue.component('draftproduct-component', require('./components/DraftProductCompon
 Vue.component('imageproduct-component', require('./components/ImagesProductComponent.vue').default);
 Vue.component('order-component', require('./components/OrderComponent.vue').default);
 
+Vue.component('sendproducts-component', require('./components/SendProductComponent.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

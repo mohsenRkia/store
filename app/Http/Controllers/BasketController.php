@@ -50,7 +50,24 @@ class BasketController extends Controller
      */
     public function show(Basket $basket)
     {
-        //
+        $userId = Auth::id();
+        $baskets = Basket::where('user_id',$userId)->with(['product' => function($q){
+            $q->with('images');
+            $q->with('discount');
+        }])->get();
+
+        $totalPriceItem = [];
+
+        foreach ($baskets as $basket){
+            $totalPriceItem[] = $basket->totalprice;
+        }
+
+        $totalPriceItem = array_filter($totalPriceItem);
+        $totalPriceItem = array_sum($totalPriceItem);
+
+        //dd($baskets->toArray());
+        return view('site.pages.product.cart',compact(['baskets','totalPriceItem']));
+
     }
 
     /**

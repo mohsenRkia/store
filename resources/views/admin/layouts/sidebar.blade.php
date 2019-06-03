@@ -73,9 +73,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('coupon.index')}}">
+                <a class="nav-link" href="{{route('cart.index')}}">
                     <i class="material-icons">edit</i>
-                    <span>Coupons</span>
+                    <span>Carts</span>
                 </a>
             </li>
             <li class="nav-item">

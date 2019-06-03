@@ -14,6 +14,14 @@ class Cart extends Model
         'totalprice',
         'discount'];
 
+    public function product()
+    {
+       return $this->belongsTo(Product::class);
+    }
 
+    public function factor()
+    {
+        return $this->belongsTo(Factor::class);
+    }
 
 }

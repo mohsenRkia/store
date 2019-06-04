@@ -7,9 +7,11 @@ use App\Models\Cart;
 use App\Models\Coupon;
 use App\Models\Discount;
 use App\Models\Factor;
+use Carbon\Carbon;
 use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Shetabit\Payment\Facade\Payment;
 use Shetabit\Payment\Invoice;
@@ -24,7 +26,8 @@ class CartController extends Controller
     public function index()
     {
         $factors = Factor::where(['status' => 1,'sent' => 0])->with('carts')->with('user')->orderBy('id','DESC')->paginate(5);
-        //dd($factors->toArray());
+
+        //dd($carts->toArray());
         return view('admin.cart.index',compact(['factors']));
     }
 

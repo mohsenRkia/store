@@ -507,6 +507,34 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],functi
             'as' => 'discount.delete'
         ]);
     });
+
+    Route::group(['prefix' => 'satisfied'],function (){
+
+        Route::get('/',[
+           'as' => 'admin.satisfied.index',
+           'uses' => 'SatisfiedcostumerController@index'
+        ]);
+        Route::get('/show/{id}',[
+            'as' => 'admin.satisfied.show',
+            'uses' => 'SatisfiedcostumerController@show'
+        ]);
+        Route::get('/create',[
+            'as' => 'admin.satisfied.create',
+            'uses' => 'SatisfiedcostumerController@create'
+        ]);
+        Route::post('/active/{id}',[
+            'as' => 'admin.satisfied.active',
+            'uses' => 'SatisfiedcostumerController@active'
+        ]);
+        Route::post('/create',[
+            'as' => 'admin.satisfied.store',
+            'uses' => 'SatisfiedcostumerController@store'
+        ]);
+        Route::post('/update/{id}',[
+            'as' => 'admin.satisfied.update',
+            'uses' => 'SatisfiedcostumerController@update'
+        ]);
+    });
 });
 
 Route::group(['prefix' => 'user','middleware' => ['verified','isUser']],function (){
@@ -532,6 +560,24 @@ Route::group(['prefix' => 'user','middleware' => ['verified','isUser']],function
            'uses' => 'UserController@changepassword',
            'as' => 'user.changepassword'
        ]);
+    });
+
+    Route::group(['prefix' => 'satisfied'],function (){
+
+        Route::get('/create',[
+            'as' => 'user.satisfied.showusercm',
+            'uses' => 'SatisfiedcostumerController@showusercm'
+        ]);
+        Route::post('/create',[
+            'as' => 'user.satisfied.addusercm',
+            'uses' => 'SatisfiedcostumerController@addusercm'
+        ]);
+
+        Route::post('/update/{id}',[
+            'as' => 'user.satisfied.editusercm',
+            'uses' => 'SatisfiedcostumerController@editusercm'
+        ]);
+
     });
 });
 

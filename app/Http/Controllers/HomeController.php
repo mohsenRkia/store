@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Offeritem;
 use App\Models\Product;
+use App\Models\Satisfiedcostumer;
 use App\Models\Slider;
 use App\Models\Specialoffer;
 use Carbon\Carbon;
@@ -48,7 +49,17 @@ class HomeController extends Controller
             }])
             ->get();
 
-        return view('site.home',compact(['sliders','offers','special','products','carts']));
+        $satisfiedComments = Satisfiedcostumer::with(['user' => function($u){
+            $u->with('image');
+            $u->with(['profile'=>function($p){
+                $p->with(['state' => function($s){
+                    $s->with('country');
+                }]);
+            }]);
+        }])->take(5)->get();
+
+        //dd($satisfiedComments->toArray());
+        return view('site.home',compact(['sliders','offers','special','products','carts','satisfiedComments']));
     }
 
 }

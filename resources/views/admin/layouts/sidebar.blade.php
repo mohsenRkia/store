@@ -79,6 +79,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{route('admin.satisfied.index')}}">
+                    <i class="material-icons">edit</i>
+                    <span>Satisfied</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{route('profile.index',['id' => Auth::user()->id])}}">
                     <i class="material-icons">person</i>
                     <span>Profile</span>

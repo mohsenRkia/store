@@ -37,6 +37,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link active" href="{{route('user.satisfied.showusercm')}}">
+                    <i class="material-icons">edit</i>
+                    <span>Comments</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link active" href="index.html">
                     <i class="material-icons">edit</i>
                     <span>My Orders</span>

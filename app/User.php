@@ -5,6 +5,7 @@ namespace App;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Profile;
+use App\Models\Satisfiedcostumer;
 use App\Models\State;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -40,6 +41,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function image()
     {
         return $this->morphOne(Image::class,'imageable');
+    }
+
+    public function satisfied()
+    {
+        return $this->belongsTo(Satisfiedcostumer::class);
     }
 
     public function products()

@@ -28,6 +28,7 @@ Vue.component('imageproduct-component', require('./components/ImagesProductCompo
 Vue.component('order-component', require('./components/OrderComponent.vue').default);
 
 Vue.component('sendproducts-component', require('./components/SendProductComponent.vue').default);
+Vue.component('activecomments-component', require('./components/ActiveCommentsComponent.vue').default);
 
 
 /**

@@ -109,7 +109,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 text-center colorlib-heading">
-                    <h2><span>New Arrival</span></h2>
+                    <h2><span>New Products</span></h2>
                     <p>We love to tell our successful far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                 </div>
             </div>
@@ -253,39 +253,19 @@
                 </div>
             </div>
             <div class="row">
+                @foreach($blogs as $blog)
                 <div class="col-md-4">
                     <article class="article-entry">
-                        <a href="blog.html" class="blog-img" style="background-image: url(/site/images/blog-1.jpg);"></a>
+                        <a href="blog.html" class="blog-img" style="background-image: url('/uploads/images/blog/{{$blog->image->url}}');"></a>
                         <div class="desc">
-                            <p class="meta"><span class="day">02</span><span class="month">Mar</span></p>
-                            <p class="admin"><span>Posted by:</span> <span>Noah Henderson</span></p>
-                            <h2><a href="blog.html">Openning Branches</a></h2>
-                            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
+                            <p class="meta"><span class="day">{{$blog->created_at->format('d')}}</span><span class="month">{{$blog->created_at->format('M')}}</span></p>
+                            <p class="admin"><span>Posted by:</span> <span>{{$blog->user->name}}</span></p>
+                            <h2><a href="{{route('site.blog.show',['id' => $blog->id,'slug' => $blog->slug])}}">{{$blog->title}}</a></h2>
+                            <p>{{substr($blog->description,0,100)}}...</p>
                         </div>
                     </article>
                 </div>
-                <div class="col-md-4">
-                    <article class="article-entry">
-                        <a href="blog.html" class="blog-img" style="background-image: url(/site/images/blog-2.jpg);"></a>
-                        <div class="desc">
-                            <p class="meta"><span class="day">02</span><span class="month">Mar</span></p>
-                            <p class="admin"><span>Posted by:</span> <span>Noah Henderson</span></p>
-                            <h2><a href="blog.html">Openning Branches</a></h2>
-                            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-                        </div>
-                    </article>
-                </div>
-                <div class="col-md-4">
-                    <article class="article-entry">
-                        <a href="blog.html" class="blog-img" style="background-image: url(/site/images/blog-3.jpg);"></a>
-                        <div class="desc">
-                            <p class="meta"><span class="day">02</span><span class="month">Mar</span></p>
-                            <p class="admin"><span>Posted by:</span> <span>Noah Henderson</span></p>
-                            <h2><a href="blog.html">Openning Branches</a></h2>
-                            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-                        </div>
-                    </article>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

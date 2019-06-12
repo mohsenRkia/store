@@ -56,7 +56,10 @@ Route::get('/payment/unverified',[
     'uses' => 'PaymentController@unverified',
     'as' => 'payment.unverified'
 ]);
-
+Route::get('/blog/{id}/{slug}',[
+    'as' => 'site.blog.show',
+    'uses' => 'BlogController@show'
+]);
 Route::get('/cart/apply','CartController@applyOrders');
 
 
@@ -533,6 +536,37 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],functi
         Route::post('/update/{id}',[
             'as' => 'admin.satisfied.update',
             'uses' => 'SatisfiedcostumerController@update'
+        ]);
+        Route::post('/delete/{id}',[
+            'as' => 'admin.satisfied.delete',
+            'uses' => 'SatisfiedcostumerController@destroy'
+        ]);
+    });
+
+    Route::group(['prefix' => 'blog'],function (){
+       Route::get('/',[
+           'as' => 'admin.blog.index',
+           'uses' => 'BlogController@index'
+       ]);
+       Route::get('/create',[
+           'as' => 'admin.blog.create',
+           'uses' => 'BlogController@create'
+       ]);
+        Route::post('/create',[
+            'as' => 'admin.blog.store',
+            'uses' => 'BlogController@store'
+        ]);
+        Route::get('/edit/{id}',[
+            'as' => 'admin.blog.edit',
+            'uses' => 'BlogController@edit'
+        ]);
+        Route::post('/update/{id}',[
+            'as' => 'admin.blog.update',
+            'uses' => 'BlogController@update'
+        ]);
+        Route::post('/delete/{id}',[
+            'as' => 'admin.blog.delete',
+            'uses' => 'BlogController@destroy'
         ]);
     });
 });

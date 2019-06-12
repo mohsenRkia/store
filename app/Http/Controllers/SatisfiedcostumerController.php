@@ -122,9 +122,12 @@ class SatisfiedcostumerController extends Controller
      * @param  \App\Satisfiedcostumer  $satisfiedcostumer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Satisfiedcostumer $satisfiedcostumer)
+    public function destroy($id)
     {
-        //
+        $cm = Satisfiedcostumer::find($id);
+        $cm->delete();
+
+        return redirect()->back();
     }
 
     public function showusercm()

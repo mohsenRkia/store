@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\Cart;
 use App\Models\Offeritem;
 use App\Models\Product;
@@ -58,8 +59,10 @@ class HomeController extends Controller
             }]);
         }])->take(5)->get();
 
+        $blogs = Blog::with('user')->take(6)->get();
+
         //dd($satisfiedComments->toArray());
-        return view('site.home',compact(['sliders','offers','special','products','carts','satisfiedComments']));
+        return view('site.home',compact(['sliders','offers','special','products','carts','satisfiedComments','blogs']));
     }
 
 }

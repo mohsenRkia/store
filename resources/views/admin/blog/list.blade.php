@@ -12,7 +12,7 @@
             </div>
         </div>
         <!-- End Page Header -->
-        <a href="{{route('admin.satisfied.create')}}" class="mb-2 btn btn-info mr-2">Add new Comment</a>
+        <a href="{{route('admin.blog.create')}}" class="mb-2 btn btn-info mr-2">Add new News</a>
 
         <div class="row">
             <div class="col">
@@ -24,37 +24,28 @@
                         <table class="table mb-0">
                             <thead class="bg-light">
                             <tr>
-                                <th scope="col" class="border-0">User</th>
-                                <th scope="col" class="border-0">Text</th>
-                                <th scope="col" class="border-0">Status</th>
+                                <th scope="col" class="border-0">Author</th>
+                                <th scope="col" class="border-0">Title</th>
                                 <th scope="col" class="border-0">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($satisfiedCms as $comment)
+                            @foreach($blogs as $blog)
                                 <tr>
-                                    <td>{{$comment->user->name}}</td>
-                                    <td>{{$comment->body}}</td>
-                                    <td>
-                                        @if($comment->status == 0)
-                                        <span class="btn btn-danger">Deactive</span>
-                                            @else
-                                            <span class="btn btn-success">Active</span>
-                                            @endif
-
-                                    </td>
+                                    <td>{{$blog->user->name}}</td>
+                                    <td>{{$blog->title}}</td>
                                     <td>
                                         <div class="blog-comments__actions">
                                             <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-white" @click="deleteRow({{$comment->id}},'satisfied')">
+                                                <button type="button" class="btn btn-white" @click="deleteRow({{$blog->id}},'blog')">
                               <span class="text-danger">
                                 <i class="material-icons">clear</i>
                               </span> Delete
                                                 </button>
-                                                <a href="{{route('admin.satisfied.show',['id' => $comment->id])}}" class="btn btn-white">
+                                                <a href="{{route('admin.blog.edit',['id' => $blog->id])}}" class="btn btn-white">
                               <span class="text-light">
                                 <i class="material-icons">more_vert</i>
-                              </span> Show
+                              </span> Edit
                                                 </a>
                                             </div>
                                         </div>

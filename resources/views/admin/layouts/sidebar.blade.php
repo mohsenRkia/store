@@ -103,9 +103,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{route('product.index')}}">
+                <a class="nav-link " href="{{route('admin.blog.index')}}">
                     <i class="material-icons">vertical_split</i>
                     <span>Blog Posts</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="{{route('product.index')}}">
+                    <i class="material-icons">vertical_split</i>
+                    <span>Products List</span>
                 </a>
             </li>
             <li class="nav-item">

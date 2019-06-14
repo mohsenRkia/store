@@ -18,6 +18,14 @@ class MenuRepository
     {
         $lists = Menu::all();
         $categories = Category::where('isparent',0)->get();
-        return compact(['lists','categories']);
+
+        $collection = [];
+        foreach ($categories as $cat){
+            $subCategories = Category::where('isparent',$cat->id)->get();
+
+            $collection[$cat->name][] = $subCategories;
+        }
+
+        return compact(['lists','collection']);
     }
 }

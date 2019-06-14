@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -80,9 +82,84 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($name)
     {
-        //
+        $category = Category::where('name',$name)->first();
+        if (!is_null($category)){
+            if ($category->isparent == 0){
+                $categorys = Category::where('isparent',$category->id)->get();
+
+                $collections = [];
+                foreach ($categorys as $cat){
+                    $subcats = Subcategory::where('category_id',$cat->id)->get();
+                    foreach ($subcats as $subcat){
+                        if ($subcat){
+                            $subcattt[] = $subcat;
+                            $collections = [];
+                            foreach ($subcattt as $sub){
+
+                                $p = Product::whereHas('subcategorys' , function($s) use ($sub){
+                                    $s->where('subcategory_id',$sub->id);
+                                })->with('images')->get();
+
+                                if (count($p) > 0){
+                                    $collections[] = $p;
+                                }
+
+                            }
+
+                        }
+
+                    }
+                }
+                //dd($collections);
+                return view('site.pages.category.index',compact(['collections']));
+            }else{
+                return redirect()->route('home.index');
+            }
+
+        }else{
+            return redirect()->route('home.index');
+        }
+
+    }
+
+    public function showSubs($first,$second){
+        $category = Category::where('name',$first)->first();
+        $checksecond = Category::where('name',$second)->where('isparent' , $category->id)->first();
+
+        if (!is_null($category) && !is_null($checksecond)){
+            if ($category->isparent == 0){
+
+                $collections = [];
+                    $subcats = Subcategory::where('category_id',$checksecond->id)->get();
+                    foreach ($subcats as $subcat){
+                        if ($subcat){
+
+                            $subcattt[] = $subcat;
+                            foreach ($subcattt as $sub){
+
+                                $p = Product::whereHas('subcategorys' , function($s) use ($sub){
+                                    $s->where('subcategory_id',$sub->id);
+                                })->with('images')->get();
+
+                                $collections[] = $p;
+                            }
+                        }
+                    }
+
+
+
+
+                //dd($collections);
+                return view('site.pages.category.subcategory',compact(['collections']));
+            }else{
+                return redirect()->route('home.index');
+            }
+
+        }else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**

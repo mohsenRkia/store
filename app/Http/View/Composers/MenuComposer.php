@@ -26,9 +26,9 @@ class MenuComposer
         $all =  (object)$this->menu->menuList();
 
         $menus = $all->lists;
-        $caregorys = $all->categories;
+        $collection = $all->collection;
 
-        $view->with(compact(['menus','caregorys']));
+        $view->with(compact(['menus','collection']));
     }
 
 }

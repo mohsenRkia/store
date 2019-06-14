@@ -60,6 +60,14 @@ Route::get('/blog/{id}/{slug}',[
     'as' => 'site.blog.show',
     'uses' => 'BlogController@show'
 ]);
+Route::get('/category/{name}',[
+    'as' => 'site.category.show',
+    'uses' => 'CategoryController@show'
+]);
+Route::get('/category/{first}/{second}',[
+    'as' => 'site.category.showSubs',
+    'uses' => 'CategoryController@showSubs'
+]);
 Route::get('/cart/apply','CartController@applyOrders');
 
 

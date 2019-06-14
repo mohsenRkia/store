@@ -53,7 +53,15 @@
                         @endif
 
 
-                        <li><a href="{{route('site.cart')}}"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
+                        <li><a href="{{route('site.cart')}}"><i class="icon-shopping-cart"></i>
+                                Cart [
+                            @if(is_null($cartCount))
+                                0
+                                @else
+                                {{$cartCount}}
+                                @endif
+                                ]
+                            </a></li>
                     </ul>
                 </div>
             </div>

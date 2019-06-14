@@ -27,8 +27,9 @@ class MenuComposer
 
         $menus = $all->lists;
         $collection = $all->collection;
+        $cartCount = $all->cartCount;
 
-        $view->with(compact(['menus','collection']));
+        $view->with(compact(['menus','collection','cartCount']));
     }
 
 }

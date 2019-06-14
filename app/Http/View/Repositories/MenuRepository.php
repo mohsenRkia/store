@@ -9,8 +9,10 @@
 namespace App\Http\View\Repositories;
 
 
+use App\Models\Basket;
 use App\Models\Category;
 use App\Models\Menu;
+use Illuminate\Support\Facades\Auth;
 
 class MenuRepository
 {
@@ -26,6 +28,7 @@ class MenuRepository
             $collection[$cat->name][] = $subCategories;
         }
 
-        return compact(['lists','collection']);
+        $cartCount = count(Basket::where('user_id',Auth::id())->get());
+        return compact(['lists','collection','cartCount']);
     }
 }

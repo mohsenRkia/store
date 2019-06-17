@@ -121,6 +121,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{route('admin.setting.index')}}">
+                    <i class="material-icons">table_chart</i>
+                    <span>Settings</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link " href="form-components.html">
                     <i class="material-icons">view_module</i>
                     <span>Forms &amp; Components</span>

@@ -78,6 +78,24 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],functi
         'as' => 'admin.index'
     ]);
 
+    Route::group(['prefix' => 'setting'],function(){
+       Route::get('/',[
+           'uses' => 'SettingController@index',
+           'as' => 'admin.setting.index'
+       ]);
+
+        Route::post('/store',[
+            'uses' => 'SettingController@store',
+            'as' => 'admin.setting.store'
+        ]);
+        Route::post('/update/{id}',[
+            'uses' => 'SettingController@update',
+            'as' => 'admin.setting.update'
+        ]);
+
+
+    });
+
     Route::group(['prefix' => 'menu'],function (){
         Route::get('/',[
             'uses' => 'MenuController@index',

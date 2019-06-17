@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Satisfiedcostumer;
 use App\Models\Slider;
 use App\Models\Specialoffer;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -32,9 +33,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = Product::with(['prices' => function($pr){
-            $pr->orderBy('id','DESC')->first();
+        $products = Product::with(['prices' => function($prc){
+            $prc->orderBy('id','DESC');
         }])->with('images')->get();
+
+
+
+        //dd($products->toArray());
         $sliders = Slider::all();
         $offers = Offeritem::all();
         $special = Specialoffer::orderBy('id','DESC')->first();

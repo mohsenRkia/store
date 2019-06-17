@@ -134,7 +134,17 @@
                         @endforeach
                         <div class="desc">
                             <h3><a href="shop.html">{{$product->name}}</a></h3>
-                            <p class="price"><span>$300.00</span></p>
+                            <p class="price"><span>
+                                    @if(!is_null($product->offerprice))
+                                        ${{$product->offerprice}}
+                                        @else
+                                        @foreach($product->prices as $key => $price)
+                                            @if($key == 0)
+                                                {{$price->originalprice}}
+                                                @endif
+                                        @endforeach
+                                    @endif
+                                </span></p>
                         </div>
                     </div>
                 </div>

@@ -149,7 +149,7 @@ class ProductController extends Controller
     {
         $product = Product::with('discount')->with(['prices' => function($pr){
             $pr->orderBy('id','DESC')->first();
-        }])->with('colors')->with('sizes')->with('images')->with(['comments' => function($c){
+        }])->with('colors')->with('sizes')->with('images')->with('subcategorys')->with(['comments' => function($c){
             $c->with(['user' => function($u){
                 $u->with('image');
             }]);
@@ -158,9 +158,19 @@ class ProductController extends Controller
 
         $setting = Setting::first();
 
-        //dd($product->toArray());
+        $subIds = [];
+        foreach ($product->subcategorys as $subcategory){
+            $subIds[] = $subcategory->id;
+        }
+        $similars = Product::whereHas('subcategorys',function ($s) use ($subIds){
+            $s->where('subcategory_id',$subIds[0]);
+        })->with(['prices' => function($prc){
+            $prc->orderBy('id','DESC');
+        }])->with('images')->get();
+
+        //dd($similars->toArray());
         if ($slug == $product->slug){
-            return view('site.pages.product.view',compact(['product','setting']));
+            return view('site.pages.product.view',compact(['product','setting','similars']));
         }else{
             return redirect()->route('home.index');
         }

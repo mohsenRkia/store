@@ -176,14 +176,20 @@
 
                                                                     @foreach($product->comments as $comment)
                                                                     <div class="review">
-                                                                        @if(!is_null($comment->user->image->url))
+                                                                        @if(!is_null($comment->user))
                                                                             <div class="user-img" style="background-image: url('/uploads/images/avatars/{{$comment->user->image->url}}')"></div>
                                                                         @else
                                                                             <div class="user-img" style="background-image: url('/avatar.png')"></div>
                                                                         @endif
                                                                         <div class="desc">
                                                                             <h4>
-                                                                                <span class="text-left">{{$comment->user->name}}</span>
+                                                                                <span class="text-left">
+                                                                                @if(!is_null($comment->user_id))
+                                                                                        {{$comment->user->name}}
+                                                                                    @else
+                                                                                        {{$comment->name}}
+                                                                                    @endif
+                                                                                </span>
                                                                                 <span class="text-right">{{$comment->created_at->toDayDateTimeString()}}</span>
                                                                             </h4>
                                                                             <p>
@@ -254,10 +260,10 @@
                                                                             <div class="desc">
                                                                                 <h4>
                                                                                     <span class="text-left">
-                                                                                    @if($comment->name)
-                                                                                        {{$comment->name}}
+                                                                                    @if(!is_null($comment->user_id))
+                                                                                        {{$comment->user->name}}
                                                                                         @else
-                                                                                        Guest
+                                                                                        {{$comment->name}}
                                                                                         @endif
                                                                                     </span>
                                                                                     <span class="text-right">{{$comment->created_at->toDayDateTimeString()}}</span>

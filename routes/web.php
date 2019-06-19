@@ -70,6 +70,14 @@ Route::get('/category/{first}/{second}',[
 ]);
 Route::get('/cart/apply','CartController@applyOrders');
 
+Route::group(['prefix' => 'comment'],function (){
+
+    Route::post('/store/{id}',[
+        'as' => 'site.comment.store',
+        'uses' => 'CommentController@store'
+    ]);
+
+});
 
 Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],function (){
 

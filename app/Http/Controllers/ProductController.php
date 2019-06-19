@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\Comment;
 use App\Models\Discount;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Productprice;
+use App\Models\Setting;
 use App\Models\Size;
 use App\Models\Subcategory;
 use App\User;
@@ -147,10 +149,18 @@ class ProductController extends Controller
     {
         $product = Product::with('discount')->with(['prices' => function($pr){
             $pr->orderBy('id','DESC')->first();
-        }])->with('colors')->with('sizes')->with('images')->find($id);
+        }])->with('colors')->with('sizes')->with('images')->with(['comments' => function($c){
+            $c->with(['user' => function($u){
+                $u->with('image');
+            }]);
+            $c->orderBy('id','DESC');
+        }])->find($id);
+
+        $setting = Setting::first();
+
+        //dd($product->toArray());
         if ($slug == $product->slug){
-            //dd($product->toArray());
-            return view('site.pages.product.view',compact(['product']));
+            return view('site.pages.product.view',compact(['product','setting']));
         }else{
             return redirect()->route('home.index');
         }

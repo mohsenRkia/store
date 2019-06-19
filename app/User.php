@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Comment;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Profile;
@@ -51,5 +52,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class,'commentable');
     }
 }

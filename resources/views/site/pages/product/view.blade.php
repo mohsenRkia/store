@@ -131,92 +131,154 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <div class="row">
-                            <div class="col-md-12 tabulation">
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#description">Reviews</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div id="description" class="tab-pane fade in active">
-                                        <div class="row">
-                                            <div class="col-md-11">
-                                                <form action="" method="POST">
+                    @if(is_null($setting))
 
-                                                </form>
-                                            </div>
-                                            <div class="col-md-11">
-                                                <h3>23 Reviews</h3>
-                                                <div class="review">
-                                                    <div class="user-img" style="background-image: url(images/person1.jpg)"></div>
-                                                    <div class="desc">
-                                                        <h4>
-                                                            <span class="text-left">Jacob Webb</span>
-                                                            <span class="text-right">14 March 2018</span>
-                                                        </h4>
-                                                        <p class="star">
-										   				<span>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-half"></i>
-										   					<i class="icon-star-empty"></i>
-									   					</span>
-                                                            <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-                                                        </p>
-                                                        <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
-                                                    </div>
-                                                </div>
-                                                <div class="review">
-                                                    <div class="user-img" style="background-image: url(images/person2.jpg)"></div>
-                                                    <div class="desc">
-                                                        <h4>
-                                                            <span class="text-left">Jacob Webb</span>
-                                                            <span class="text-right">14 March 2018</span>
-                                                        </h4>
-                                                        <p class="star">
-										   				<span>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-half"></i>
-										   					<i class="icon-star-empty"></i>
-									   					</span>
-                                                            <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-                                                        </p>
-                                                        <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
-                                                    </div>
-                                                </div>
-                                                <div class="review">
-                                                    <div class="user-img" style="background-image: url(images/person3.jpg)"></div>
-                                                    <div class="desc">
-                                                        <h4>
-                                                            <span class="text-left">Jacob Webb</span>
-                                                            <span class="text-right">14 March 2018</span>
-                                                        </h4>
-                                                        <p class="star">
-										   				<span>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-full"></i>
-										   					<i class="icon-star-half"></i>
-										   					<i class="icon-star-empty"></i>
-									   					</span>
-                                                            <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-                                                        </p>
-                                                        <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
-                                                    </div>
-                                                </div>
-                                            </div>
+                    @else
+                        @if($setting->comment == 0)
 
+
+                        @elseif($setting->comment == 1)
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div class="row">
+                                        <div class="col-md-12 tabulation">
+                                            <ul class="nav nav-tabs">
+                                                <li class="active"><a data-toggle="tab" href="#description">Reviews</a></li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div id="description" class="tab-pane fade in active">
+                                                    <div class="row">
+                            @if($setting->login_to_comment == 1)
+                                                            @if(Auth::user())
+                                                                <div class="col-md-11">
+                                                                    <div class="contact-wrap">
+                                                                    <form action="{{route('site.comment.store',['id' => $product->id])}}" method="POST">
+                                                                        @csrf
+                                                                        <div class="row form-group">
+
+                                                                            <label for="username">User Name</label>
+
+                                                                            <input class="form-control" type="text" name="username" disabled value="{{Auth::user()->name}}">
+                                                                        </div>
+                                                                        <div class="row form-group">
+                                                                            <label for="commenttxt">Text</label>
+                                                                            <textarea class="form-control" name="commenttxt" id="" cols="30"
+                                                                                      rows="10"></textarea>
+                                                                        </div>
+                                                                        <div class="form-group text-center">
+                                                                            <input type="submit" value="Send Comment" class="btn btn-primary">
+                                                                        </div>
+                                                                    </form>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-11">
+                                                                    <h3>{{count($product->comments)}} Reviews</h3>
+
+                                                                    @foreach($product->comments as $comment)
+                                                                    <div class="review">
+                                                                        @if(!is_null($comment->user->image->url))
+                                                                            <div class="user-img" style="background-image: url('/uploads/images/avatars/{{$comment->user->image->url}}')"></div>
+                                                                        @else
+                                                                            <div class="user-img" style="background-image: url('/avatar.png')"></div>
+                                                                        @endif
+                                                                        <div class="desc">
+                                                                            <h4>
+                                                                                <span class="text-left">{{$comment->user->name}}</span>
+                                                                                <span class="text-right">{{$comment->created_at->toDayDateTimeString()}}</span>
+                                                                            </h4>
+                                                                            <p>
+                                                                                {{$comment->body}}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    @endforeach
+                                                                </div>
+                                                            @else
+                                                            <h3 class="text-danger">Login To Send Comment and See Reviews</h3>
+                                                            @endif
+                            @else
+                                                            @if(Auth::user())
+                                                                <div class="col-md-11">
+                                                                    <div class="contact-wrap">
+                                                                        <form action="{{route('site.comment.store',['id' => $product->id])}}" method="POST">
+                                                                            @csrf
+                                                                            <div class="row form-group">
+
+                                                                                <label for="username">User Name</label>
+
+                                                                                <input class="form-control" type="text" name="username" disabled value="{{Auth::user()->name}}">
+                                                                            </div>
+                                                                            <div class="row form-group">
+                                                                                <label for="commenttxt">Text</label>
+                                                                                <textarea class="form-control" name="commenttxt" id="" cols="30"
+                                                                                          rows="10"></textarea>
+                                                                            </div>
+                                                                            <div class="form-group text-center">
+                                                                                <input type="submit" value="Send Comment" class="btn btn-primary">
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="col-md-11">
+                                                                    <div class="contact-wrap">
+                                                                        <form action="{{route('site.comment.store',['id' => $product->id])}}" method="POST">
+                                                                            @csrf
+                                                                            <div class="row form-group">
+
+                                                                                <label for="username">User Name</label>
+
+                                                                                <input class="form-control" type="text" name="username" placeholder="Name">
+                                                                            </div>
+                                                                            <div class="row form-group">
+                                                                                <label for="commenttxt">Text</label>
+                                                                                <textarea class="form-control" name="commenttxt" id="" cols="30"
+                                                                                          rows="10"></textarea>
+                                                                            </div>
+                                                                            <div class="form-group text-center">
+                                                                                <input type="submit" value="Send Comment" class="btn btn-primary">
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                                <div class="col-md-11">
+                                                                    <h3>{{count($product->comments)}} Reviews</h3>
+                                                                    @foreach($product->comments as $comment)
+                                                                        <div class="review">
+                                                                            @if(!is_null($comment->user))
+                                                                            <div class="user-img" style="background-image: url('/uploads/images/avatars/{{$comment->user->image->url}}')"></div>
+                                                                            @else
+                                                                                <div class="user-img" style="background-image: url('/avatar.png')"></div>
+                                                                            @endif
+                                                                            <div class="desc">
+                                                                                <h4>
+                                                                                    <span class="text-left">
+                                                                                    @if($comment->name)
+                                                                                        {{$comment->name}}
+                                                                                        @else
+                                                                                        Guest
+                                                                                        @endif
+                                                                                    </span>
+                                                                                    <span class="text-right">{{$comment->created_at->toDayDateTimeString()}}</span>
+                                                                                </h4>
+                                                                                <p>
+                                                                                    {{$comment->body}}
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
+                                                                </div>
+                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            @endif
+                    @endif
             </div>
         </div>
 

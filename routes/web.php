@@ -64,6 +64,10 @@ Route::get('/category/{name}',[
     'as' => 'site.category.show',
     'uses' => 'CategoryController@show'
 ]);
+Route::get('/about',[
+    'as' => 'site.about.show',
+    'uses' => 'AboutController@show'
+]);
 Route::get('/category/{first}/{second}',[
     'as' => 'site.category.showSubs',
     'uses' => 'CategoryController@showSubs'
@@ -601,6 +605,29 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],functi
         Route::post('/delete/{id}',[
             'as' => 'admin.blog.delete',
             'uses' => 'BlogController@destroy'
+        ]);
+    });
+    Route::group(['prefix' => 'about'],function (){
+
+        Route::get('/create',[
+            'as' => 'admin.about.create',
+            'uses' => 'AboutController@create'
+        ]);
+        Route::post('/create',[
+            'as' => 'admin.about.store',
+            'uses' => 'AboutController@store'
+        ]);
+        Route::get('/edit/{id}',[
+            'as' => 'admin.about.edit',
+            'uses' => 'AboutController@edit'
+        ]);
+        Route::post('/update/{id}',[
+            'as' => 'admin.about.update',
+            'uses' => 'AboutController@update'
+        ]);
+        Route::post('/delete/{id}',[
+            'as' => 'admin.about.delete',
+            'uses' => 'AboutController@destroy'
         ]);
     });
 });

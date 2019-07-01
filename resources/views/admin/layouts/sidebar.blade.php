@@ -25,7 +25,7 @@
     <div class="nav-wrapper">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" href="index.html">
+                <a class="nav-link active" href="{{route('admin.index')}}">
                     <i class="material-icons">edit</i>
                     <span>Blog Dashboard</span>
                 </a>
@@ -121,15 +121,21 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('admin.setting.index')}}">
-                    <i class="material-icons">table_chart</i>
-                    <span>Settings</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="{{route('admin.about.create')}}">
                     <i class="material-icons">table_chart</i>
                     <span>About</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('admin.contactus.index')}}">
+                    <i class="material-icons">table_chart</i>
+                    <span>Contact Us</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('admin.setting.index')}}">
+                    <i class="material-icons">table_chart</i>
+                    <span>Settings</span>
                 </a>
             </li>
         </ul>

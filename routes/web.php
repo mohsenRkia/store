@@ -72,6 +72,19 @@ Route::get('/category/{first}/{second}',[
     'as' => 'site.category.showSubs',
     'uses' => 'CategoryController@showSubs'
 ]);
+Route::group(['prefix' => 'contactus'],function (){
+   Route::get('/',[
+       'as' => 'site.contactus.index',
+       'uses' => 'MessageController@show'
+   ]);
+
+    Route::post('/send',[
+        'as' => 'site.contactus.send',
+        'uses' => 'MessageController@send'
+    ]);
+
+});
+
 Route::get('/cart/apply','CartController@applyOrders');
 
 Route::group(['prefix' => 'comment'],function (){
@@ -629,6 +642,24 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],functi
             'as' => 'admin.about.delete',
             'uses' => 'AboutController@destroy'
         ]);
+    });
+    Route::group(['prefix' => 'contactus'],function (){
+        Route::get('/',[
+            'as' => 'admin.contactus.index',
+            'uses' => 'MessageController@index'
+        ]);
+
+        Route::get('/edit/{id}',[
+           'uses' => 'MessageController@edit',
+           'as' => 'admin.contactus.edit'
+        ]);
+
+        Route::post('/delete/{id}',[
+           'uses' => 'MessageController@destroy',
+           'as' => 'admin.contactus.delete'
+        ]);
+
+
     });
 });
 

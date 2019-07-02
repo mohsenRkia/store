@@ -439,6 +439,26 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isAdmin']],functi
         ]);
     });
 
+    Route::group(['prefix' => 'user'],function (){
+       Route::get('/',[
+           'uses' => 'UserController@list',
+           'as' => 'admin.users.list'
+       ]);
+
+       Route::get('/edit/{id}',[
+           'uses' => 'UserController@showuser',
+           'as' => 'admin.user.showuser'
+       ]);
+
+        Route::post('/update/{id}',[
+            'uses' => 'UserController@updateuser',
+            'as' => 'admin.user.updateuser'
+        ]);
+
+
+       Route::post('/delete/{id}', 'UserController@destroy');
+    });
+
     Route::group(['prefix' => 'product'],function (){
         Route::get('/index',[
             'uses' => 'ProductController@index',

@@ -91,7 +91,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{route('admin.users.list')}}">
                     <i class="material-icons">edit</i>
                     <span>Users</span>
                 </a>

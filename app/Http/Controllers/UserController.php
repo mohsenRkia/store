@@ -139,4 +139,57 @@ class UserController extends Controller
             return redirect()->back();
         }
     }
+
+    public function list()
+    {
+        $users = User::paginate(5);
+
+        return view('admin.users.list',compact(['users']));
+    }
+
+    public function destroy($id)
+    {
+        $find = User::find($id);
+
+        $find->delete();
+    }
+
+    public function showuser($id)
+    {
+        $user = User::find($id);
+
+        return view('admin.users.showuser',compact(['user']));
+    }
+
+    public function updateuser(Request $r,$id)
+    {
+        $user = User::find($id);
+
+        $r->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'password' => 'nullable|string|min:6',
+            'level_id' => 'required|integer|between:0,1'
+        ]);
+
+        if ($r->password){
+            $update = $user->update([
+                'name' => $r->name,
+                'email' => $r->email,
+                'password' => Hash::make($r->password),
+                'level_id' => $r->level_id
+            ]);
+        }else{
+            $update = $user->update([
+                'name' => $r->name,
+                'email' => $r->email,
+                'level_id' => $r->level_id
+        ]);
+        }
+
+        if ($update){
+            editAlert("User has been updatyed successfully");
+        }
+        return redirect()->route('admin.users.list');
+    }
 }

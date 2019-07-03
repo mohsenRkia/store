@@ -5,16 +5,18 @@
         <ul class="navbar-nav border-left flex-row ">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img class="user-avatar rounded-circle mr-2" src="/admin/images/avatars/0.jpg" alt="User Avatar">
-                    <span class="d-none d-md-inline-block">Sierra Brooks</span>
+
+                    @if($userInfo->image)
+                        <img class="user-avatar rounded-circle mr-2" src="/uploads/images/avatars/{{$userInfo->image->url}}" alt="User Avatar">
+                    @else
+                        <img class="user-avatar rounded-circle mr-2" src="/avatar.png" alt="User Avatar" width="110">
+                    @endif
+
+                    <span class="d-none d-md-inline-block">{{Auth::user()->name}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-small">
-                    <a class="dropdown-item" href="user-profile-lite.html">
+                    <a class="dropdown-item" href="{{route('user.edit',['id' => Auth::user()->id])}}">
                         <i class="material-icons">&#xE7FD;</i> Profile</a>
-                    <a class="dropdown-item" href="components-blog-posts.html">
-                        <i class="material-icons">vertical_split</i> Blog Posts</a>
-                    <a class="dropdown-item" href="add-new-post.html">
-                        <i class="material-icons">note_add</i> Add New Post</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                        onclick="event.preventDefault();

@@ -14,12 +14,6 @@ class FactorController extends Controller
         $update = $factor->update([
             'sent' => $sent
         ]);
-        //if ($update){
-        //    return $sent;
-        //}
-
         return $factor->sent;
-
    }
-
 }

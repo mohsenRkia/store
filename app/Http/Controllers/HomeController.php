@@ -16,30 +16,11 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //$this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         $products = Product::with(['prices' => function($prc){
             $prc->orderBy('id','DESC');
         }])->with('images')->get();
-
-
-
-        //dd($products->toArray());
         $sliders = Slider::all();
         $offers = Offeritem::all();
         $special = Specialoffer::orderBy('id','DESC')->first();
@@ -63,10 +44,7 @@ class HomeController extends Controller
                 }]);
             }]);
         }])->take(5)->get();
-
         $blogs = Blog::with('user')->take(6)->get();
-
-        //dd($satisfiedComments->toArray());
         return view('site.home',compact(['sliders','offers','special','products','carts','satisfiedComments','blogs']));
     }
 

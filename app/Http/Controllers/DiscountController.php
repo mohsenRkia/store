@@ -7,33 +7,15 @@ use Illuminate\Http\Request;
 
 class DiscountController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $discounts = Discount::all();
         return view('admin.discount.index',compact(['discounts']));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('admin.discount.create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $r)
     {
         $r->validate([
@@ -52,37 +34,11 @@ class DiscountController extends Controller
             return redirect()->back();
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Discount  $discount
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Discount $discount)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Discount  $discount
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $discount = Discount::find($id);
         return view('admin.discount.edit',compact(['discount']));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Discount  $discount
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $r,$id)
     {
         $r->validate([
@@ -104,13 +60,6 @@ class DiscountController extends Controller
         }
 
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Discount  $discount
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $discount = Discount::find($id);

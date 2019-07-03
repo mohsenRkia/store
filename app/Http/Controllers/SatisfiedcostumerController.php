@@ -8,23 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class SatisfiedcostumerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $satisfiedCms = Satisfiedcostumer::with('user')->orderBy('updated_at','DESC')->get();
 
         return view('admin.satisfied.index',compact(['satisfiedCms']));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $userid = Auth::id();
@@ -33,13 +22,6 @@ class SatisfiedcostumerController extends Controller
 
         return view('admin.satisfied.create',compact(['satisfied']));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $r)
     {
         $r->validate([
@@ -56,13 +38,6 @@ class SatisfiedcostumerController extends Controller
         createAlert('Your Message Has Been Created Successfully');
         return redirect()->back();
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Satisfiedcostumer  $satisfiedcostumer
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $cm = Satisfiedcostumer::with(['user' => function($u){
@@ -74,28 +49,12 @@ class SatisfiedcostumerController extends Controller
             }]);
         }])->find($id);
 
-        //dd($cm->toArray());
         return view('admin.satisfied.show',compact(['cm']));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Satisfiedcostumer  $satisfiedcostumer
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Satisfiedcostumer $satisfiedcostumer)
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Satisfiedcostumer  $satisfiedcostumer
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $r,$id)
     {
         $r->validate([
@@ -115,13 +74,6 @@ class SatisfiedcostumerController extends Controller
 
         return redirect()->back();
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Satisfiedcostumer  $satisfiedcostumer
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $cm = Satisfiedcostumer::find($id);

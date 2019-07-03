@@ -8,25 +8,12 @@ use Illuminate\Http\Request;
 
 class SpecialofferController extends Controller
 {
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $special = Specialoffer::orderBy('id','DESC')->first();
 
-        //dd($special);
         return view('admin.special.create',compact(['special']));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $r)
     {
         $r->validate([
@@ -65,13 +52,6 @@ class SpecialofferController extends Controller
 
 
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Specialoffer  $specialoffer
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $r,$id)
     {
         $r->validate([

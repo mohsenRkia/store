@@ -9,34 +9,16 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('admin.category.index');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $categorys = Category::where('isparent',0)->get();
 
         return view('admin.category.create',compact(['categorys']));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $r)
     {
         $validate = $r->validate([
@@ -68,20 +50,11 @@ class CategoryController extends Controller
         $cats = Category::where('isparent',0)->paginate(10);
         $categorys = [];
         foreach ($cats as $cat){
-           //$item  = Category::where('isparent',$cat->id)->get();
            $item  = Category::where('isparent',$cat->id)->with('subcategories')->get();
             $categorys[$cat->name][$cat->id] = $item->toArray();
         }
-        //dd($categorys);
         return view('admin.category.list',compact(['categorys']));
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function show($name)
     {
         $category = Category::where('name',$name)->first();
@@ -112,7 +85,6 @@ class CategoryController extends Controller
 
                     }
                 }
-                //dd($collections);
                 return view('site.pages.category.index',compact(['collections']));
             }else{
                 return redirect()->route('home.index');
@@ -147,11 +119,6 @@ class CategoryController extends Controller
                             }
                         }
                     }
-
-
-
-
-                //dd($collections);
                 return view('site.pages.category.subcategory',compact(['collections']));
             }else{
                 return redirect()->route('home.index');
@@ -161,13 +128,6 @@ class CategoryController extends Controller
             return redirect()->route('home.index');
         }
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $allCategory = Category::where('isparent',0)->get();
@@ -179,14 +139,6 @@ class CategoryController extends Controller
         }
         return view('admin.category.edit',compact(['allCategory','category','parent']));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function update($id,Request $r)
     {
         $validate = $r->validate([
@@ -209,13 +161,6 @@ class CategoryController extends Controller
         }
 
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $category = Category::find($id);

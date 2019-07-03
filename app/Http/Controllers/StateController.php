@@ -8,35 +8,17 @@ use Illuminate\Http\Request;
 
 class StateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $countries = Country::with('states')->get();
 
         return view('admin.location.state.list',compact(['countries']));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $countries = Country::all();
         return view('admin.location.state.create',compact(['countries']));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $r)
     {
         $r->validate([
@@ -56,24 +38,6 @@ class StateController extends Controller
             return redirect()->back();
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\State  $state
-     * @return \Illuminate\Http\Response
-     */
-    public function show(State $state)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\State  $state
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $state = State::where('id',$id)->with('country')->first();
@@ -81,14 +45,6 @@ class StateController extends Controller
 
         return view('admin.location.state.edit',compact(['state','countries']));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\State  $state
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $r,$id)
     {
         $r->validate([
@@ -109,13 +65,6 @@ class StateController extends Controller
         }
 
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\State  $state
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $state = State::find($id);

@@ -7,32 +7,14 @@ use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('admin.menu.index');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('admin.menu.create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $r)
     {
         $validate = $r->validate([
@@ -61,37 +43,11 @@ class MenuController extends Controller
         $menus = Menu::paginate(10);
         return view('admin.menu.list',compact(['menus']));
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Menu  $menu
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Menu $menu)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Menu  $menu
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $menu = Menu::find($id);
         return view('admin.menu.edit',compact(['menu']));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Menu  $menu
-     * @return \Illuminate\Http\Response
-     */
     public function update($id,Request $r)
     {
         $validate = $r->validate([
@@ -113,13 +69,6 @@ class MenuController extends Controller
             }
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Menu  $menu
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $menu = Menu::find($id);

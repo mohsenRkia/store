@@ -11,44 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class BasketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Basket  $basket
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Basket $basket)
+    public function show()
     {
         $userId = Auth::id();
         $baskets = Basket::where('user_id',$userId)->with(['product' => function($q){
@@ -69,36 +32,6 @@ class BasketController extends Controller
         return view('site.pages.product.cart',compact(['baskets','totalPriceItem']));
 
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Basket  $basket
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Basket $basket)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Basket  $basket
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Basket $basket)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Basket  $basket
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $item = Basket::find($id);

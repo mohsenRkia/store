@@ -8,21 +8,6 @@ use Illuminate\Http\Request;
 
 class SubcategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $cats = Category::where('isparent',0)->paginate(10);
@@ -31,16 +16,8 @@ class SubcategoryController extends Controller
             $item  = Category::where('isparent',$cat->id)->get();
             $categorys[$cat->name][$cat->id] = $item->toArray();
         }
-        //dd($categorys);
         return view('admin.subcategory.create',compact(['categorys']));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $r)
     {
         $r->validate([
@@ -60,24 +37,6 @@ class SubcategoryController extends Controller
             return redirect()->back();
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Subcategory  $subcategory
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Subcategory $subcategory)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Subcategory  $subcategory
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $subcategory = Subcategory::find($id)->with('category')->first();
@@ -90,14 +49,6 @@ class SubcategoryController extends Controller
         }
         return view('admin.subcategory.edit',compact(['categorys','subcategory','parent']));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Subcategory  $subcategory
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $r,$id)
     {
         $r->validate([
@@ -118,13 +69,6 @@ class SubcategoryController extends Controller
         }
 
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Subcategory  $subcategory
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $subcategory = Subcategory::find($id);

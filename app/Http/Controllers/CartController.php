@@ -18,54 +18,17 @@ use Shetabit\Payment\Invoice;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $factors = Factor::where(['status' => 1,'sent' => 0])->with('carts')->with('user')->orderBy('id','DESC')->paginate(5);
-
-        //dd($carts->toArray());
         return view('admin.cart.index',compact(['factors']));
     }
 
     public function indexSent()
     {
         $factors = Factor::where(['status' => 1,'sent' => 1])->with('carts')->with('user')->orderBy('id','DESC')->paginate(5);
-
-        //dd($factors->toArray());
         return view('admin.cart.indexsent',compact(['factors']));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $factor = Factor::with(['carts' => function($c){
@@ -79,41 +42,6 @@ class CartController extends Controller
         //dd($factor->toArray());
         return view('admin.cart.show',compact(['factor']));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-
-    }
-
     public function check(Request $r)
     {
             $userId = Auth::id();

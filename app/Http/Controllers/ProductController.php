@@ -18,11 +18,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $products = Product::with(['prices'=>function($pr){
@@ -31,12 +26,6 @@ class ProductController extends Controller
         //dd($products->toArray());
         return view('admin.post.index',compact(['products']));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $discounts = Discount::all();
@@ -51,13 +40,6 @@ class ProductController extends Controller
         }
         return view('admin.post.create',compact(['authors','categorys','discounts','colors','sizes']));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $r)
     {
         $r->validate([
@@ -138,13 +120,6 @@ class ProductController extends Controller
         }
 
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function show($id,$slug)
     {
         $product = Product::with('discount')->with(['prices' => function($pr){
@@ -175,13 +150,6 @@ class ProductController extends Controller
             return redirect()->route('home.index');
         }
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $product = Product::with('user:id,name')->with('discount:id,discountcode')->with('sizes')->with('subcategorys')->with('colors')->with(['prices'=>function($pr){
@@ -200,14 +168,6 @@ class ProductController extends Controller
         //dd($product->toArray());
         return view('admin.post.edit',compact(['product','discounts','colors','sizes','authors','categorys']));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $r,$id)
     {
         $r->validate([
@@ -284,7 +244,6 @@ class ProductController extends Controller
             }
 
             createAlert("The Product has been edited successfully!");
-            //return redirect()->route('product.index');
             return redirect()->back();
 
         }
@@ -299,13 +258,6 @@ class ProductController extends Controller
         Storage::disk('public_uploads')->delete($file);
         $image->delete();
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $product = Product::find($id);

@@ -725,6 +725,18 @@ Route::group(['prefix' => 'user','middleware' => ['verified','isUser']],function
         ]);
 
     });
+
+    Route::group(['prefix' => 'myorder'],function (){
+        Route::get('/{id}',[
+            'uses' => 'MyorderController@index',
+            'as' => 'user.myorder.index'
+        ]);
+
+        Route::get('/show/{id}',[
+            'uses' => 'MyorderController@show',
+            'as' => 'user.myorder.show'
+        ]);
+    });
 });
 
 Auth::routes(['verify' => true]);

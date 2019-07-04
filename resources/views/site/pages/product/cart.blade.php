@@ -1,6 +1,8 @@
 @extends('site.layouts.layout')
 
-
+@section('title')
+List Of Your Orders
+@endsection
 
 @section('content')
 <div id="app">

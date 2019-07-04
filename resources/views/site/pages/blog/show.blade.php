@@ -1,5 +1,7 @@
 @extends('site.layouts.layout')
-
+@section('title')
+{{$blog->title}}
+@endsection
 @section('content')
 <div id="colorlib-about">
     <div class="container">

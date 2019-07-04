@@ -1,6 +1,8 @@
 @extends('site.layouts.layout')
 
-
+@section('title')
+{{$product->name}}
+@endsection
 
 @section('content')
     <div id="app">

@@ -1,6 +1,6 @@
 @extends('site.layouts.layout')
 
-
+@section('title','Online Store')
 
 @section('content')
 

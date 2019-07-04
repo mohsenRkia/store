@@ -1,5 +1,5 @@
 @extends('site.layouts.layout')
-
+@section('title','About Us')
 @section('content')
 <div id="colorlib-about">
     <div class="container">

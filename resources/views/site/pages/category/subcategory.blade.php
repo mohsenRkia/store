@@ -1,5 +1,7 @@
 @extends('site.layouts.layout')
-
+@section('title')
+Subcategory
+@endsection
 @section('content')
 
 
